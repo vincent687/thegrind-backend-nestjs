@@ -1,0 +1,2 @@
+dev:
+	hivemind Procfile.dev
