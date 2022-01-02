@@ -1,3 +1,7 @@
+# dev
+
+npm i
+
 # thegrind-backend-nestjs
 
 # node version
