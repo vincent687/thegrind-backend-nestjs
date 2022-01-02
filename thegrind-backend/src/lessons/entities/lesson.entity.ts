@@ -21,5 +21,5 @@ export class Lesson {
   @Column()
   custom_company_id: number;
   @Column()
-  custom_lesson_details: string;
+  custom_lession_details: string;
 }
