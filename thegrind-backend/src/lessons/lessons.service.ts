@@ -19,11 +19,19 @@ export class LessonsService {
   findAll(): Promise<Lesson[]> {
     //findAll() {
     // return null;
-    return this.lessonsRepository.find();
+    return this.lessonsRepository
+      .createQueryBuilder('lesson')
+      .leftJoinAndSelect('lesson.course', 'course')
+      .getMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} lesson`;
+    return this.lessonsRepository
+      .createQueryBuilder('lesson')
+      .leftJoinAndSelect('lesson.course', 'course')
+      .where('lesson.id = :id', { id })
+      .getOne();
+    // return `This action returns a #${id} lesson`;
   }
 
   update(id: number, updateLessonDto: UpdateLessonDto) {

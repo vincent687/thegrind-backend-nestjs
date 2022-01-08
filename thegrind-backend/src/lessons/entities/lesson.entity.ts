@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Channel } from 'src/channels/entities/channel.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity({ name: 'public.custom_subject_lession', synchronize: false })
 export class Lesson {
@@ -17,9 +24,12 @@ export class Lesson {
   @Column()
   custom_class_room_id: number;
   @Column()
-  custom_courses_id: number;
-  @Column()
   custom_company_id: number;
   @Column()
-  custom_lesson_details: string;
+  custom_lession_details: string;
+  @OneToOne(() => Channel)
+  @JoinColumn({
+    name: 'custom_courses_id',
+  })
+  course: Channel;
 }

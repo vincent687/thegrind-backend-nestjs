@@ -1,10 +1,11 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Partner } from '../partners/entities/partner.entity';
 import { Lesson } from '../lessons/entities/lesson.entity';
+import { Channel } from '../channels/entities/channel.entity';
 
 require('dotenv').config();
 
-const ALL_ENTITIES = [Partner, Lesson];
+const ALL_ENTITIES = [Partner, Lesson, Channel];
 
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
