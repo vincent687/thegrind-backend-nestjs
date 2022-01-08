@@ -17,7 +17,10 @@ export class EmployeesService {
   }
 
   findAll() {
-    return this.EmployeesRepository.find();
+    return this.EmployeesRepository.createQueryBuilder('employee')
+      .leftJoinAndSelect('employee.department', 'department')
+      .leftJoinAndSelect('department.company', 'company')
+      .getMany();
   }
 
   findOne(id: number) {

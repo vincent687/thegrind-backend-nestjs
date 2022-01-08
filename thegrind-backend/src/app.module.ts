@@ -17,6 +17,10 @@ import { ChannelsService } from './channels/channels.service';
 import { ClassRoomsModule } from './class-rooms/class-rooms.module';
 import { TutionLocationsModule } from './tution-locations/tution-locations.module';
 import { TutionLocationsService } from './tution-locations/tution-locations.service';
+import { DepartmentsModule } from './departments/departments.module';
+import { DepartmentsService } from './departments/departments.service';
+import { CompanysModule } from './companys/companys.module';
+import { CompanysService } from './companys/companys.service';
 
 @Module({
   imports: [
@@ -28,6 +32,8 @@ import { TutionLocationsService } from './tution-locations/tution-locations.serv
     ChannelsModule,
     ClassRoomsModule,
     TutionLocationsModule,
+    DepartmentsModule,
+    CompanysModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -39,6 +45,8 @@ import { TutionLocationsService } from './tution-locations/tution-locations.serv
     EmployeesService,
     ChannelsService,
     TutionLocationsService,
+    DepartmentsService,
+    CompanysService,
   ],
 })
 export class AppModule {}

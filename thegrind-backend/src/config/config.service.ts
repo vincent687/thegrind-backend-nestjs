@@ -6,6 +6,8 @@ import { Employee } from '../employees/entities/employee.entity';
 import { Channel } from '../channels/entities/channel.entity';
 import { ClassRoom } from '../class-rooms/entities/class-room.entity';
 import { TutionLocation } from '../tution-locations/entities/tution-location.entity';
+import { Department } from '../departments/entities/department.entity';
+import { Company } from 'src/companys/entities/company.entity';
 
 require('dotenv').config();
 
@@ -17,6 +19,8 @@ const ALL_ENTITIES = [
   Channel,
   ClassRoom,
   TutionLocation,
+  Department,
+  Company,
 ];
 
 class ConfigService {
