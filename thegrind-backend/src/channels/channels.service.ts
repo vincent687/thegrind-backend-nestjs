@@ -9,7 +9,7 @@ import { Channel } from './entities/channel.entity';
 export class ChannelsService {
   constructor(
     @InjectRepository(Channel)
-    private ChannelsRepository: Repository<Channel>,
+    private channelsRepository: Repository<Channel>,
   ) {}
 
   create(createChannelDto: CreateChannelDto) {
@@ -17,11 +17,20 @@ export class ChannelsService {
   }
 
   findAll() {
-    return this.ChannelsRepository.find();
+    return this.channelsRepository
+      .createQueryBuilder('channel')
+      .leftJoinAndSelect('channel.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .getMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} channel`;
+    return this.channelsRepository
+      .createQueryBuilder('channel')
+      .leftJoinAndSelect('channel.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .where('channel.id = :id', { id })
+      .getOne();
   }
 
   update(id: number, updateChannelDto: UpdateChannelDto) {

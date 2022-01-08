@@ -17,13 +17,22 @@ export class LessonsService {
   }
 
   findAll(): Promise<Lesson[]> {
-    //findAll() {
-    // return null;
-    return this.lessonsRepository.find();
+    return this.lessonsRepository
+      .createQueryBuilder('lesson')
+      .leftJoinAndSelect('lesson.course', 'course')
+      .leftJoinAndSelect('course.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .getMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} lesson`;
+    return this.lessonsRepository
+      .createQueryBuilder('lesson')
+      .leftJoinAndSelect('lesson.course', 'course')
+      .leftJoinAndSelect('course.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .where('lesson.id = :id', { id })
+      .getOne();
   }
 
   update(id: number, updateLessonDto: UpdateLessonDto) {

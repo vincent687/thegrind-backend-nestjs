@@ -4,6 +4,8 @@ import { Lesson } from '../lessons/entities/lesson.entity';
 import { Tutor } from '../tutors/entities/tutor.entity';
 import { Employee } from '../employees/entities/employee.entity';
 import { Channel } from '../channels/entities/channel.entity';
+import { ChannelTag } from '../channel-tags/entities/channel-tag.entity';
+import { ChannelChannelTag } from '../channel-tags/entities/channel-channel-tag.entity';
 import { ClassRoom } from '../class-rooms/entities/class-room.entity';
 import { TutionLocation } from '../tution-locations/entities/tution-location.entity';
 import { Department } from '../departments/entities/department.entity';
@@ -21,8 +23,9 @@ const ALL_ENTITIES = [
   TutionLocation,
   Department,
   Company,
+  ChannelTag,
+  ChannelChannelTag,
 ];
-
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 

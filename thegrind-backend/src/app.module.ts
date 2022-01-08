@@ -12,8 +12,6 @@ import { TutorsModule } from './tutors/tutors.module';
 import { TutorsService } from './tutors/tutors.service';
 import { EmployeesModule } from './employees/employees.module';
 import { EmployeesService } from './employees/employees.service';
-import { ChannelsModule } from './channels/channels.module';
-import { ChannelsService } from './channels/channels.service';
 import { ClassRoomsModule } from './class-rooms/class-rooms.module';
 import { TutionLocationsModule } from './tution-locations/tution-locations.module';
 import { TutionLocationsService } from './tution-locations/tution-locations.service';
@@ -21,6 +19,10 @@ import { DepartmentsModule } from './departments/departments.module';
 import { DepartmentsService } from './departments/departments.service';
 import { CompanysModule } from './companys/companys.module';
 import { CompanysService } from './companys/companys.service';
+import { ChannelsModule } from './channels/channels.module';
+import { ChannelsService } from './channels/channels.service';
+import { ChannelTagsModule } from './channel-tags/channel-tags.module';
+import { ChannelTagsService } from './channel-tags/channel-tags.service';
 
 @Module({
   imports: [
@@ -29,11 +31,12 @@ import { CompanysService } from './companys/companys.service';
     LessonsModule,
     TutorsModule,
     EmployeesModule,
-    ChannelsModule,
     ClassRoomsModule,
     TutionLocationsModule,
     DepartmentsModule,
     CompanysModule,
+    ChannelsModule,
+    ChannelTagsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -43,10 +46,11 @@ import { CompanysService } from './companys/companys.service';
     LessonsService,
     TutorsService,
     EmployeesService,
-    ChannelsService,
     TutionLocationsService,
     DepartmentsService,
     CompanysService,
+    ChannelsService,
+    ChannelTagsService,
   ],
 })
 export class AppModule {}
