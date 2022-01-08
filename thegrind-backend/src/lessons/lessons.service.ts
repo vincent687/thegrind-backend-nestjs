@@ -17,11 +17,11 @@ export class LessonsService {
   }
 
   findAll(): Promise<Lesson[]> {
-    //findAll() {
-    // return null;
     return this.lessonsRepository
       .createQueryBuilder('lesson')
       .leftJoinAndSelect('lesson.course', 'course')
+      .leftJoinAndSelect('course.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
       .getMany();
   }
 
@@ -29,9 +29,10 @@ export class LessonsService {
     return this.lessonsRepository
       .createQueryBuilder('lesson')
       .leftJoinAndSelect('lesson.course', 'course')
+      .leftJoinAndSelect('course.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
       .where('lesson.id = :id', { id })
       .getOne();
-    // return `This action returns a #${id} lesson`;
   }
 
   update(id: number, updateLessonDto: UpdateLessonDto) {

@@ -10,6 +10,8 @@ import { LessonsModule } from './lessons/lessons.module';
 import { LessonsService } from './lessons/lessons.service';
 import { ChannelsModule } from './channels/channels.module';
 import { ChannelsService } from './channels/channels.service';
+import { ChannelTagsModule } from './channel-tags/channel-tags.module';
+import { ChannelTagsService } from './channel-tags/channel-tags.service';
 
 @Module({
   imports: [
@@ -17,9 +19,16 @@ import { ChannelsService } from './channels/channels.service';
     PartnersModule,
     LessonsModule,
     ChannelsModule,
+    ChannelTagsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
-  providers: [AppService, PartnersService, LessonsService, ChannelsService],
+  providers: [
+    AppService,
+    PartnersService,
+    LessonsService,
+    ChannelsService,
+    ChannelTagsService,
+  ],
 })
 export class AppModule {}

@@ -17,15 +17,20 @@ export class ChannelsService {
   }
 
   findAll() {
-    return this.channelsRepository.find();
+    return this.channelsRepository
+      .createQueryBuilder('channel')
+      .leftJoinAndSelect('channel.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .getMany();
   }
 
   findOne(id: number) {
-    return this.channelsRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+    return this.channelsRepository
+      .createQueryBuilder('channel')
+      .leftJoinAndSelect('channel.channelChannelTags', 'channelChannelTags')
+      .leftJoinAndSelect('channelChannelTags.tag', 'channelTags')
+      .where('channel.id = :id', { id })
+      .getOne();
   }
 
   update(id: number, updateChannelDto: UpdateChannelDto) {
