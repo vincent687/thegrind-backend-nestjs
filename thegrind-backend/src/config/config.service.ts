@@ -10,6 +10,8 @@ import { ClassRoom } from '../class-rooms/entities/class-room.entity';
 import { TutionLocation } from '../tution-locations/entities/tution-location.entity';
 import { Department } from '../departments/entities/department.entity';
 import { Company } from 'src/companys/entities/company.entity';
+import { Video } from '../videos/entities/video.entity';
+import { User } from 'src/users/entities/user.entity';
 
 require('dotenv').config();
 
@@ -25,6 +27,8 @@ const ALL_ENTITIES = [
   Company,
   ChannelTag,
   ChannelChannelTag,
+  Video,
+  User,
 ];
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}

@@ -23,6 +23,10 @@ import { ChannelsModule } from './channels/channels.module';
 import { ChannelsService } from './channels/channels.service';
 import { ChannelTagsModule } from './channel-tags/channel-tags.module';
 import { ChannelTagsService } from './channel-tags/channel-tags.service';
+import { VideosModule } from './videos/videos.module';
+import { VideosService } from './videos/videos.service';
+import { UsersModule } from './users/users.module';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -37,6 +41,8 @@ import { ChannelTagsService } from './channel-tags/channel-tags.service';
     CompanysModule,
     ChannelsModule,
     ChannelTagsModule,
+    VideosModule,
+    UsersModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -51,6 +57,8 @@ import { ChannelTagsService } from './channel-tags/channel-tags.service';
     CompanysService,
     ChannelsService,
     ChannelTagsService,
+    VideosService,
+    UsersService,
   ],
 })
 export class AppModule {}
