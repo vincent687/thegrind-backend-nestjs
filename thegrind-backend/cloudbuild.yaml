@@ -1,26 +1,26 @@
 steps:
   # Build the container image
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/the-grind-331903/thegrind-backend", "."]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/the-grind-331903/thegrind-backend', '.']
   # Push the container image to Container Registry
-  - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/the-grind-331903/thegrind-backend"]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/the-grind-331903/thegrind-backend']
   # Deploy container image to Cloud Run
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
       [
-        "run",
-        "deploy",
-        "SERVICE-NAME",
-        "--image",
-        "gcr.io/the-grind-331903/thegrind-backend",
-        "--region",
-        "REGION",
-        "--platform",
-        "managed",
-        "--port",
-        "3000",
+        'run',
+        'deploy',
+        'thegrind-backend',
+        '--image',
+        'gcr.io/the-grind-331903/thegrind-backend',
+        '--region',
+        'REGION',
+        '--platform',
+        'managed',
+        '--port',
+        '3000',
       ]
 images:
   - gcr.io/the-grind-331903/thegrind-backend
