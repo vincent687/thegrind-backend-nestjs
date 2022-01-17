@@ -16,7 +16,7 @@ steps:
         '--image',
         'gcr.io/the-grind-331903/thegrind-backend',
         '--region',
-        'REGION',
+        'asia-east2',
         '--platform',
         'managed',
         '--port',
