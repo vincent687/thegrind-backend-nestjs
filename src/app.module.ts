@@ -27,6 +27,10 @@ import { VideosModule } from './videos/videos.module';
 import { VideosService } from './videos/videos.service';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { MessagesModule } from './messages/messages.module';
+import { MessagesService } from './messages/messages.service';
+import { FilesModule } from './files/files.module';
+import { FilesService } from './files/files.service';
 
 @Module({
   imports: [
@@ -43,6 +47,8 @@ import { UsersService } from './users/users.service';
     ChannelTagsModule,
     VideosModule,
     UsersModule,
+    MessagesModule,
+    FilesModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -59,6 +65,8 @@ import { UsersService } from './users/users.service';
     ChannelTagsService,
     VideosService,
     UsersService,
+    MessagesService,
+    FilesService,
   ],
 })
-export class AppModule {}
+export class AppModule { }

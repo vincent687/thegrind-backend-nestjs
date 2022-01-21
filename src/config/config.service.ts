@@ -12,6 +12,8 @@ import { Department } from '../departments/entities/department.entity';
 import { Company } from 'src/companys/entities/company.entity';
 import { Video } from '../videos/entities/video.entity';
 import { User } from 'src/users/entities/user.entity';
+import { Message } from '../messages/entities/message.entity';
+import { File } from '../files/entities/file.entity';
 
 require('dotenv').config();
 
@@ -29,9 +31,11 @@ const ALL_ENTITIES = [
   ChannelChannelTag,
   Video,
   User,
+  Message,
+  File,
 ];
 class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) {}
+  constructor(private env: { [k: string]: string | undefined }) { }
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
