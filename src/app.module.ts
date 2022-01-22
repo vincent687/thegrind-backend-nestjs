@@ -29,8 +29,8 @@ import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
 import { MessagesModule } from './messages/messages.module';
 import { MessagesService } from './messages/messages.service';
-import { FilesModule } from './files/files.module';
-import { FilesService } from './files/files.service';
+import { AttachmentsModule } from './attachments/attachments.module';
+import { AttachmentsService } from './attachments/attachments.service';
 
 @Module({
   imports: [
@@ -48,7 +48,7 @@ import { FilesService } from './files/files.service';
     VideosModule,
     UsersModule,
     MessagesModule,
-    FilesModule,
+    AttachmentsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -66,7 +66,7 @@ import { FilesService } from './files/files.service';
     VideosService,
     UsersService,
     MessagesService,
-    FilesService,
+    AttachmentsService,
   ],
 })
 export class AppModule { }

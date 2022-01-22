@@ -13,7 +13,7 @@ import { Company } from 'src/companys/entities/company.entity';
 import { Video } from '../videos/entities/video.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Message } from '../messages/entities/message.entity';
-import { File } from '../files/entities/file.entity';
+import { Attachment } from 'src/attachments/entities/attachment.entity';
 
 require('dotenv').config();
 
@@ -32,7 +32,7 @@ const ALL_ENTITIES = [
   Video,
   User,
   Message,
-  File,
+  Attachment,
 ];
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) { }
