@@ -1,33 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { User } from "./entities/user.entity";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private UsersRepository: Repository<User>
   ) {}
 
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return "This action adds a new user";
   }
 
   findAll() {
-    return this.usersRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.partner', 'partner')
+    return this.UsersRepository.createQueryBuilder("user")
+      .leftJoinAndSelect("user.partner", "partner")
       .getMany();
   }
 
   findOne(id: number) {
-    return this.usersRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect('user.partner', 'partner')
-      .where('user.id = :id', { id })
+    return this.UsersRepository.createQueryBuilder("user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("user.id = :id", { id })
       .getOne();
   }
 

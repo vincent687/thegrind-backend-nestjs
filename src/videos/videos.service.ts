@@ -1,37 +1,35 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateVideoDto } from './dto/create-video.dto';
-import { UpdateVideoDto } from './dto/update-video.dto';
-import { Video } from './entities/video.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateVideoDto } from "./dto/create-video.dto";
+import { UpdateVideoDto } from "./dto/update-video.dto";
+import { Video } from "./entities/video.entity";
 
 @Injectable()
 export class VideosService {
   constructor(
     @InjectRepository(Video)
-    private videosRepository: Repository<Video>,
+    private VideosRepository: Repository<Video>
   ) {}
 
   create(createVideoDto: CreateVideoDto) {
-    return 'This action adds a new video';
+    return "This action adds a new video";
   }
 
   findAll() {
-    return this.videosRepository
-      .createQueryBuilder('video')
-      .leftJoinAndSelect('video.owner', 'user')
-      .leftJoinAndSelect('user.partner', 'partner')
-      .leftJoinAndSelect('video.channel', 'channel')
+    return this.VideosRepository.createQueryBuilder("video")
+      .leftJoinAndSelect("video.owner", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .leftJoinAndSelect("video.channel", "channel")
       .getMany();
   }
 
   findOne(id: number) {
-    return this.videosRepository
-      .createQueryBuilder('video')
-      .leftJoinAndSelect('video.owner', 'user')
-      .leftJoinAndSelect('user.partner', 'partner')
-      .leftJoinAndSelect('video.channel', 'channel')
-      .where('video.id = :id', { id })
+    return this.VideosRepository.createQueryBuilder("video")
+      .leftJoinAndSelect("video.owner", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .leftJoinAndSelect("video.channel", "channel")
+      .where("video.id = :id", { id })
       .getOne();
   }
 

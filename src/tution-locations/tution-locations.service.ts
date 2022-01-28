@@ -1,27 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateTutionLocationDto } from './dto/create-tution-location.dto';
-import { UpdateTutionLocationDto } from './dto/update-tution-location.dto';
-import { TutionLocation } from './entities/tution-location.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateTutionLocationDto } from "./dto/create-tution-location.dto";
+import { UpdateTutionLocationDto } from "./dto/update-tution-location.dto";
+import { TutionLocation } from "./entities/tution-location.entity";
 
 @Injectable()
 export class TutionLocationsService {
   constructor(
     @InjectRepository(TutionLocation)
-    private tutionLocationsRepository: Repository<TutionLocation>,
+    private TutionLocationsRepository: Repository<TutionLocation>
   ) {}
 
   create(createTutionLocationDto: CreateTutionLocationDto) {
-    return 'This action adds a new tutionLocation';
+    return "This action adds a new tutionLocation";
   }
 
   findAll() {
-    return this.tutionLocationsRepository.find();
+    return this.TutionLocationsRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} tutionLocation`;
+    return this.TutionLocationsRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   update(id: number, updateTutionLocationDto: UpdateTutionLocationDto) {
