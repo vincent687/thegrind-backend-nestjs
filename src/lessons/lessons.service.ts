@@ -24,6 +24,8 @@ export class LessonsService {
       .getMany();
   }
 
+  findVideos() {}
+
   findOne(id: number) {
     return this.LessonsRepository.createQueryBuilder("lesson")
       .leftJoinAndSelect("lesson.course", "course")

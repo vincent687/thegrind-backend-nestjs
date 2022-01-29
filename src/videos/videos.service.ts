@@ -24,6 +24,14 @@ export class VideosService {
       .getMany();
   }
 
+  findAllByCourseId(id: number) {
+    return this.VideosRepository.createQueryBuilder("video")
+      .leftJoinAndSelect("video.owner", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("video.channel_id = :id", { id })
+      .getMany();
+  }
+
   findOne(id: number) {
     return this.VideosRepository.createQueryBuilder("video")
       .leftJoinAndSelect("video.owner", "user")
