@@ -27,6 +27,12 @@ import { VideosModule } from './videos/videos.module';
 import { VideosService } from './videos/videos.service';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { MessagesModule } from './messages/messages.module';
+import { MessagesService } from './messages/messages.service';
+import { AttachmentsModule } from './attachments/attachments.module';
+import { AttachmentsService } from './attachments/attachments.service';
+import { StudentAttendancesModule } from './student-attendances/student-attendances.module';
+import { StudentAttendancesService } from './student-attendances/student-attendances.service';
 
 @Module({
   imports: [
@@ -43,6 +49,9 @@ import { UsersService } from './users/users.service';
     ChannelTagsModule,
     VideosModule,
     UsersModule,
+    MessagesModule,
+    AttachmentsModule,
+    StudentAttendancesModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -59,6 +68,9 @@ import { UsersService } from './users/users.service';
     ChannelTagsService,
     VideosService,
     UsersService,
+    MessagesService,
+    AttachmentsService,
+    StudentAttendancesService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
