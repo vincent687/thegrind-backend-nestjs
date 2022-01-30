@@ -31,6 +31,8 @@ import { MessagesModule } from './messages/messages.module';
 import { MessagesService } from './messages/messages.service';
 import { AttachmentsModule } from './attachments/attachments.module';
 import { AttachmentsService } from './attachments/attachments.service';
+import { StudentAttendancesModule } from './student-attendances/student-attendances.module';
+import { StudentAttendancesService } from './student-attendances/student-attendances.service';
 
 @Module({
   imports: [
@@ -49,6 +51,7 @@ import { AttachmentsService } from './attachments/attachments.service';
     UsersModule,
     MessagesModule,
     AttachmentsModule,
+    StudentAttendancesModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -67,6 +70,7 @@ import { AttachmentsService } from './attachments/attachments.service';
     UsersService,
     MessagesService,
     AttachmentsService,
+    StudentAttendancesService,
   ],
 })
 export class AppModule { }

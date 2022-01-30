@@ -9,7 +9,7 @@ import { Attachment } from './entities/attachment.entity';
 export class AttachmentsService {
   constructor(
     @InjectRepository(Attachment)
-    private DepartmentsRepository: Repository<Attachment>,
+    private AttachmentsRepository: Repository<Attachment>,
   ) { }
 
   create(createAttachmentDto: CreateAttachmentDto) {
@@ -17,7 +17,7 @@ export class AttachmentsService {
   }
 
   findAll() {
-    return `This action returns all attachments`;
+    return this.AttachmentsRepository.find();
   }
 
   findOne(id: number) {
