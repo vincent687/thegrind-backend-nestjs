@@ -1,11 +1,13 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AttachmentsService } from './attachments.service';
 import { CreateAttachmentDto } from './dto/create-attachment.dto';
 import { UpdateAttachmentDto } from './dto/update-attachment.dto';
 
+@ApiTags('Attachments')
 @Controller('attachments')
 export class AttachmentsController {
-  constructor(private readonly attachmentsService: AttachmentsService) {}
+  constructor(private readonly attachmentsService: AttachmentsService) { }
 
   @Post()
   create(@Body() createAttachmentDto: CreateAttachmentDto) {
