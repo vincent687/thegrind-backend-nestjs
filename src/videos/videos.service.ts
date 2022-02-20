@@ -48,6 +48,7 @@ export class VideosService {
       .leftJoinAndSelect("video.owner", "user")
       .leftJoinAndSelect("user.partner", "partner")
       .where("video.channel_id = :id", { id })
+      .orderBy("video.sequence")
       .getMany();
 
     const result: ReadVideoDto[] = videos.map((key, index) => {

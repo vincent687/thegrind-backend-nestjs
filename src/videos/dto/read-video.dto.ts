@@ -8,6 +8,7 @@ export class ReadVideoDto {
   slide_type: string;
   url: string;
   thumbnail: string;
+  sequence: number;
   owner: User;
   channel: Channel;
 }
