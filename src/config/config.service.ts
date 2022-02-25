@@ -1,22 +1,23 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Partner } from '../partners/entities/partner.entity';
-import { Lesson } from '../lessons/entities/lesson.entity';
-import { Tutor } from '../tutors/entities/tutor.entity';
-import { Employee } from '../employees/entities/employee.entity';
-import { Channel } from '../channels/entities/channel.entity';
-import { ChannelTag } from '../channel-tags/entities/channel-tag.entity';
-import { ChannelChannelTag } from '../channel-tags/entities/channel-channel-tag.entity';
-import { ClassRoom } from '../class-rooms/entities/class-room.entity';
-import { TutionLocation } from '../tution-locations/entities/tution-location.entity';
-import { Department } from '../departments/entities/department.entity';
-import { Company } from 'src/companys/entities/company.entity';
-import { Video } from '../videos/entities/video.entity';
-import { User } from 'src/users/entities/user.entity';
-import { Message } from '../messages/entities/message.entity';
-import { Attachment } from '../attachments/entities/attachment.entity';
-import { StudentAttendance } from '../student-attendances/entities/student-attendance.entity';
+import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { Partner } from "../partners/entities/partner.entity";
+import { Lesson } from "../lessons/entities/lesson.entity";
+import { Tutor } from "../tutors/entities/tutor.entity";
+import { Employee } from "../employees/entities/employee.entity";
+import { Channel } from "../channels/entities/channel.entity";
+import { ChannelTag } from "../channel-tags/entities/channel-tag.entity";
+import { ChannelChannelTag } from "../channel-tags/entities/channel-channel-tag.entity";
+import { ClassRoom } from "../class-rooms/entities/class-room.entity";
+import { TutionLocation } from "../tution-locations/entities/tution-location.entity";
+import { Department } from "../departments/entities/department.entity";
+import { Company } from "src/companys/entities/company.entity";
+import { Video } from "../videos/entities/video.entity";
+import { User } from "src/users/entities/user.entity";
+import { Message } from "../messages/entities/message.entity";
+import { Attachment } from "../attachments/entities/attachment.entity";
+import { StudentAttendance } from "../student-attendances/entities/student-attendance.entity";
+import { CompanyUser } from "../users/entities/company-user.entity";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const ALL_ENTITIES = [
   Partner,
@@ -35,9 +36,10 @@ const ALL_ENTITIES = [
   Message,
   Attachment,
   StudentAttendance,
+  CompanyUser,
 ];
 class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) { }
+  constructor(private env: { [k: string]: string | undefined }) {}
 
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
@@ -54,32 +56,32 @@ class ConfigService {
   }
 
   public getPort() {
-    return this.getValue('PORT', true);
+    return this.getValue("PORT", true);
   }
 
   public isProduction() {
-    const mode = this.getValue('MODE', false);
-    return mode != 'DEV';
+    const mode = this.getValue("MODE", false);
+    return mode != "DEV";
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
-      type: 'postgres',
+      type: "postgres",
 
-      host: this.getValue('POSTGRES_HOST'),
-      port: parseInt(this.getValue('POSTGRES_PORT')),
-      username: this.getValue('POSTGRES_USER'),
-      password: this.getValue('POSTGRES_PASSWORD'),
-      database: this.getValue('POSTGRES_DATABASE'),
+      host: this.getValue("POSTGRES_HOST"),
+      port: parseInt(this.getValue("POSTGRES_PORT")),
+      username: this.getValue("POSTGRES_USER"),
+      password: this.getValue("POSTGRES_PASSWORD"),
+      database: this.getValue("POSTGRES_DATABASE"),
 
       entities: ALL_ENTITIES,
 
-      migrationsTableName: 'migration',
+      migrationsTableName: "migration",
 
-      migrations: ['src/migration/*.ts'],
+      migrations: ["src/migration/*.ts"],
 
       cli: {
-        migrationsDir: 'src/migration',
+        migrationsDir: "src/migration",
       },
 
       ssl: this.isProduction(),
@@ -88,11 +90,11 @@ class ConfigService {
 }
 
 const configService = new ConfigService(process.env).ensureValues([
-  'POSTGRES_HOST',
-  'POSTGRES_PORT',
-  'POSTGRES_USER',
-  'POSTGRES_PASSWORD',
-  'POSTGRES_DATABASE',
+  "POSTGRES_HOST",
+  "POSTGRES_PORT",
+  "POSTGRES_USER",
+  "POSTGRES_PASSWORD",
+  "POSTGRES_DATABASE",
 ]);
 
 export { configService };

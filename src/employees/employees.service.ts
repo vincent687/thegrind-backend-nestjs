@@ -19,14 +19,14 @@ export class EmployeesService {
   findAll() {
     return this.EmployeesRepository.createQueryBuilder("employee")
       .leftJoinAndSelect("employee.department", "department")
-      .leftJoinAndSelect("department.company", "company")
+      .leftJoinAndSelect("employee.company", "company")
       .getMany();
   }
 
   findOne(id: number) {
     return this.EmployeesRepository.createQueryBuilder("employee")
       .leftJoinAndSelect("employee.department", "department")
-      .leftJoinAndSelect("department.company", "company")
+      .leftJoinAndSelect("employee.company", "company")
       .where("employee.id = :id", { id })
       .getOne();
   }

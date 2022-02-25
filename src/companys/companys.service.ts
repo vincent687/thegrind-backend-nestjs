@@ -17,15 +17,23 @@ export class CompanysService {
   }
 
   findAll() {
-    return this.CompanysRepository.find();
+    return this.CompanysRepository.createQueryBuilder("company")
+      .leftJoinAndSelect("company.companyInfo", "companyInfo")
+      .leftJoinAndSelect("company.employees", "companyUser")
+      .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("user.id != 2")
+      .getMany();
   }
 
   findOne(id: number) {
-    return this.CompanysRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+    return this.CompanysRepository.createQueryBuilder("company")
+      .leftJoinAndSelect("company.companyInfo", "companyInfo")
+      .leftJoinAndSelect("company.employees", "companyUser")
+      .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("company.id = :id and user.id != 2", { id })
+      .getOne();
   }
 
   update(id: number, updateCompanyDto: UpdateCompanyDto) {

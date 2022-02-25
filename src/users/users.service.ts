@@ -19,12 +19,14 @@ export class UsersService {
   findAll() {
     return this.UsersRepository.createQueryBuilder("user")
       .leftJoinAndSelect("user.partner", "partner")
+      .leftJoinAndSelect("user.companys", "companyUser")
       .getMany();
   }
 
   findOne(id: number) {
     return this.UsersRepository.createQueryBuilder("user")
       .leftJoinAndSelect("user.partner", "partner")
+      .leftJoinAndSelect("user.companys", "companyUser")
       .where("user.id = :id", { id })
       .getOne();
   }

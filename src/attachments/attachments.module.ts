@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-import { AttachmentsService } from './attachments.service';
-import { AttachmentsController } from './attachments.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Attachment } from './entities/attachment.entity';
+import { Module } from "@nestjs/common";
+import { AttachmentsService } from "./attachments.service";
+import { AttachmentsController } from "./attachments.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Attachment } from "./entities/attachment.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Attachment])],
   controllers: [AttachmentsController],
   providers: [AttachmentsService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, AttachmentsService],
 })
-export class AttachmentsModule { }
+export class AttachmentsModule {}

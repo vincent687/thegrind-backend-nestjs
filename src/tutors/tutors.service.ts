@@ -19,6 +19,7 @@ export class TutorsService {
   findAll() {
     return this.TutorsRepository.createQueryBuilder("tutor")
       .leftJoinAndSelect("tutor.employee", "employee")
+      .leftJoinAndSelect("employee.company", "company")
       .leftJoinAndSelect("tutor.class_room", "class_room")
       .leftJoinAndSelect("tutor.location", "location")
       .leftJoinAndSelect("tutor.course", "course")
@@ -31,6 +32,7 @@ export class TutorsService {
   findOne(id: number) {
     return this.TutorsRepository.createQueryBuilder("tutor")
       .leftJoinAndSelect("tutor.employee", "employee")
+      .leftJoinAndSelect("employee.company", "company")
       .leftJoinAndSelect("tutor.class_room", "class_room")
       .leftJoinAndSelect("tutor.location", "location")
       .leftJoinAndSelect("tutor.course", "course")

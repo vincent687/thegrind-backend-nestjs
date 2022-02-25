@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'public.ir_attachement', synchronize: false })
+@Entity({ name: "public.ir_attachment", synchronize: false })
 export class Attachment {
   @PrimaryGeneratedColumn()
   id: number;
