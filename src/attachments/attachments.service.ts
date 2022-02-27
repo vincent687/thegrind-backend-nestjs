@@ -46,7 +46,7 @@ export class AttachmentsService {
       .getOne();
     result = {
       ...attachment,
-      url: `http://35.185.147.125:10012/web/image?model=${table}&id=${attachment.id}&field=${attachment.name}`,
+      url: `http://35.185.147.125:10012/web/content/${attachment.id}`,
     };
     return result;
   }
