@@ -14,6 +14,7 @@ import { ApiTags } from "@nestjs/swagger";
 import { ReadTutorDto } from "./dto/read-tutor.dto";
 import { ReadEmployeeDto } from "src/employees/dto/read-employee.dto";
 import { AttachmentsService } from "src/attachments/attachments.service";
+import { Channel } from "../channels/entities/channel.entity";
 
 @ApiTags("Tutors")
 @Controller("tutors")
@@ -39,8 +40,13 @@ export class TutorsController {
         "hr.employee",
         tutors[i].employee.id
       );
+      var attachment2 = await this.attachmentsService.getImageByTable(
+        "slide.channel",
+        tutors[i].course.id
+      );
       var newEmployee = { ...tutors[i].employee, attachment };
-      tutorFinal = { ...tutors[i], employee: newEmployee };
+      var newChannel = { ...tutors[i].course, attachment: attachment2 };
+      tutorFinal = { ...tutors[i], employee: newEmployee, course: newChannel };
 
       tutorsFinal.push(tutorFinal);
     }
@@ -57,10 +63,14 @@ export class TutorsController {
       "hr.employee",
       tutor.employee.id
     );
+    var attachment2 = await this.attachmentsService.getImageByTable(
+      "slide.channel",
+      tutor.course.id
+    );
     var newEmployee = new ReadEmployeeDto();
     newEmployee = { ...tutor.employee, attachment };
-
-    tutorFinal = { ...tutor, employee: newEmployee };
+    var newChannel = { ...tutor.course, attachment: attachment2 };
+    tutorFinal = { ...tutor, employee: newEmployee, course: newChannel };
 
     return tutorFinal;
   }
