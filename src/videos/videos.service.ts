@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Channel } from "src/channels/entities/channel.entity";
 import { Repository } from "typeorm";
+import { URLSearchParams } from "url";
 import { CreateVideoDto } from "./dto/create-video.dto";
 import { ReadVideoDto } from "./dto/read-video.dto";
 import { UpdateVideoDto } from "./dto/update-video.dto";
@@ -33,6 +34,15 @@ export class VideosService {
           const last = segemnts.pop() || segemnts.pop();
           thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
         }
+        if (key.url.includes("youtube")) {
+          const segments = key.url.split("?");
+          const query = segments[1];
+          const params = new URLSearchParams(query);
+          if (params.has("v")) {
+            thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+          }
+          // thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+        }
       }
       const obj: ReadVideoDto = {
         ...key,
@@ -55,9 +65,17 @@ export class VideosService {
       let thumbnail = "";
       if (key.url) {
         if (key.url.includes("youtu.be")) {
-          const segemnts = key.url.split("/");
-          const last = segemnts.pop() || segemnts.pop();
+          const segments = key.url.split("/");
+          const last = segments.pop() || segments.pop();
           thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+        }
+        if (key.url.includes("youtube")) {
+          const segments = key.url.split("?");
+          const query = segments[1];
+          const params = new URLSearchParams(query);
+          if (params.has("v")) {
+            thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+          }
         }
       }
       const obj: ReadVideoDto = {
