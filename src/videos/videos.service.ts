@@ -47,6 +47,7 @@ export class VideosService {
       const obj: ReadVideoDto = {
         ...key,
         thumbnail: thumbnail,
+        section: "",
       };
       return obj;
     });
@@ -81,10 +82,51 @@ export class VideosService {
       const obj: ReadVideoDto = {
         ...key,
         thumbnail: thumbnail,
+        section: "",
       };
       return obj;
     });
     return result;
+  }
+  async findAllOtherVideoWithSectionByCourseId(id: number) {
+    let videos = await this.VideosRepository.createQueryBuilder("video")
+      .leftJoinAndSelect("video.owner", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("video.channel_id = :id", { id })
+      .orderBy("video.sequence")
+      .getMany();
+
+    // const finalResult: ReadVideoDto[];
+    var currentSection = "";
+    const result: ReadVideoDto[] = videos.map((key, index) => {
+      if (key.slide_type == "document" && !key.url) {
+        currentSection = key.name;
+      } else {
+        let thumbnail = "";
+        if (key.url) {
+          if (key.url.includes("youtu.be")) {
+            const segments = key.url.split("/");
+            const last = segments.pop() || segments.pop();
+            thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+          }
+          if (key.url.includes("youtube")) {
+            const segments = key.url.split("?");
+            const query = segments[1];
+            const params = new URLSearchParams(query);
+            if (params.has("v")) {
+              thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+            }
+          }
+        }
+        const obj: ReadVideoDto = {
+          ...key,
+          thumbnail: thumbnail,
+          section: currentSection,
+        };
+        return obj;
+      }
+    });
+    return result.filter((u) => u != null);
   }
 
   async findOne(id: number) {
@@ -107,6 +149,7 @@ export class VideosService {
     const obj: ReadVideoDto = {
       ...video,
       thumbnail: thumbnail,
+      section: "",
     };
     return obj;
   }

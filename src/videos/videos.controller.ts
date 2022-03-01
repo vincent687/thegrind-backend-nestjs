@@ -32,6 +32,11 @@ export class VideosController {
     return this.videosService.findAllByCourseId(+id);
   }
 
+  @Get("/videoSection/:id")
+  findAllOtherVideoWithSectionByCourseId(@Param("id") id: string) {
+    return this.videosService.findAllOtherVideoWithSectionByCourseId(+id);
+  }
+
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.videosService.findOne(+id);

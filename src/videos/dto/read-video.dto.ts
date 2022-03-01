@@ -11,4 +11,5 @@ export class ReadVideoDto {
   sequence: number;
   owner: User;
   channel: Channel;
+  section: string;
 }
