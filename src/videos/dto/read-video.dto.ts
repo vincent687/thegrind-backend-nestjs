@@ -1,5 +1,5 @@
 import { Channel } from "src/channels/entities/channel.entity";
-import { User } from "src/users/entities/user.entity";
+import { User } from "src/users-odoo/entities/user.entity";
 
 export class ReadVideoDto {
   id: number;

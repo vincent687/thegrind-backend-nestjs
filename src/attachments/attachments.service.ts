@@ -10,7 +10,7 @@ import { resourceLimits } from "worker_threads";
 @Injectable()
 export class AttachmentsService {
   constructor(
-    @InjectRepository(Attachment)
+    @InjectRepository(Attachment, "odoo")
     private AttachmentsRepository: Repository<Attachment>
   ) {}
 

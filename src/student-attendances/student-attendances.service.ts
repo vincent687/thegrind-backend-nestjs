@@ -1,19 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { CreateStudentAttendanceDto } from './dto/create-student-attendance.dto';
-import { UpdateStudentAttendanceDto } from './dto/update-student-attendance.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { StudentAttendance } from './entities/student-attendance.entity';
+import { Injectable } from "@nestjs/common";
+import { CreateStudentAttendanceDto } from "./dto/create-student-attendance.dto";
+import { UpdateStudentAttendanceDto } from "./dto/update-student-attendance.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { StudentAttendance } from "./entities/student-attendance.entity";
 
 @Injectable()
 export class StudentAttendancesService {
   constructor(
-    @InjectRepository(StudentAttendance)
-    private StudentAttendancesRepository: Repository<StudentAttendance>,
-  ) { }
+    @InjectRepository(StudentAttendance, "odoo")
+    private StudentAttendancesRepository: Repository<StudentAttendance>
+  ) {}
 
   create(createStudentAttendanceDto: CreateStudentAttendanceDto) {
-    return 'This action adds a new studentAttendance';
+    return "This action adds a new studentAttendance";
   }
 
   findAll() {

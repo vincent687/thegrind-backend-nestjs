@@ -8,7 +8,7 @@ import { Tutor } from "./entities/tutor.entity";
 @Injectable()
 export class TutorsService {
   constructor(
-    @InjectRepository(Tutor)
+    @InjectRepository(Tutor, "odoo")
     private TutorsRepository: Repository<Tutor>
   ) {}
 

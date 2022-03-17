@@ -6,7 +6,7 @@ import { Lesson } from "./entities/lesson.entity";
 import { VideosModule } from "../videos/videos.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Lesson]), VideosModule],
+  imports: [TypeOrmModule.forFeature([Lesson], "odoo"), VideosModule],
   controllers: [LessonsController],
   providers: [LessonsService],
   exports: [TypeOrmModule],

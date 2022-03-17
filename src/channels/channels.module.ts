@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ChannelsService } from './channels.service';
-import { ChannelsController } from './channels.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Channel } from './entities/channel.entity';
+import { Module } from "@nestjs/common";
+import { ChannelsService } from "./channels.service";
+import { ChannelsController } from "./channels.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { Channel } from "./entities/channel.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Channel])],
+  imports: [TypeOrmModule.forFeature([Channel], "odoo")],
   controllers: [ChannelsController],
   providers: [ChannelsService],
   exports: [TypeOrmModule],

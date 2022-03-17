@@ -11,7 +11,7 @@ import { Video } from "./entities/video.entity";
 @Injectable()
 export class VideosService {
   constructor(
-    @InjectRepository(Video)
+    @InjectRepository(Video, "odoo")
     private VideosRepository: Repository<Video>
   ) {}
 

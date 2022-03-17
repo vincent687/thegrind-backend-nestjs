@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Partner } from "../../partners/entities/partner.entity";
-import { CompanyUser } from "../../users/entities/company-user.entity";
+import { CompanyUser } from "../../users-odoo/entities/company-user.entity";
 
 @Entity({ name: "public.res_company", synchronize: false })
 export class Company {

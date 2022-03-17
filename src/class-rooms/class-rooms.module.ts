@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
-import { ClassRoomsService } from './class-rooms.service';
-import { ClassRoomsController } from './class-rooms.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ClassRoom } from './entities/class-room.entity';
+import { Module } from "@nestjs/common";
+import { ClassRoomsService } from "./class-rooms.service";
+import { ClassRoomsController } from "./class-rooms.controller";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { ClassRoom } from "./entities/class-room.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClassRoom])],
+  imports: [TypeOrmModule.forFeature([ClassRoom], "odoo")],
   controllers: [ClassRoomsController],
   providers: [ClassRoomsService],
   exports: [TypeOrmModule],

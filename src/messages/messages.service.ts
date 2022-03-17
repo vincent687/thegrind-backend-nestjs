@@ -1,19 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
-import { Repository } from 'typeorm';
-import { Message } from './entities/message.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CreateMessageDto } from "./dto/create-message.dto";
+import { UpdateMessageDto } from "./dto/update-message.dto";
+import { Repository } from "typeorm";
+import { Message } from "./entities/message.entity";
 
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectRepository(Message)
-    private MessagesRepository: Repository<Message>,
-  ) { }
+    @InjectRepository(Message, "odoo")
+    private MessagesRepository: Repository<Message>
+  ) {}
 
   create(createMessageDto: CreateMessageDto) {
-    return 'This action adds a new message';
+    return "This action adds a new message";
   }
 
   findAll() {

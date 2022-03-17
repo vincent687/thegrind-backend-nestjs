@@ -25,17 +25,22 @@ import { ChannelTagsModule } from "./channel-tags/channel-tags.module";
 import { ChannelTagsService } from "./channel-tags/channel-tags.service";
 import { VideosModule } from "./videos/videos.module";
 import { VideosService } from "./videos/videos.service";
-import { UsersModule } from "./users/users.module";
-import { UsersService } from "./users/users.service";
+import { UsersModule as UsersOdooMoudle } from "./users-odoo/users.module";
+import { UsersService as UsersOdooService } from "./users-odoo/users.service";
 import { MessagesModule } from "./messages/messages.module";
 import { MessagesService } from "./messages/messages.service";
 import { AttachmentsModule } from "./attachments/attachments.module";
 import { AttachmentsService } from "./attachments/attachments.service";
 import { StudentAttendancesModule } from "./student-attendances/student-attendances.module";
 import { StudentAttendancesService } from "./student-attendances/student-attendances.service";
+import { UsersModule } from "./non-odoo/users/users.module";
+import { UsersService } from "./non-odoo/users/users.service";
+import { AuthenticationModule } from "./non-odoo/authentication/authentication.module";
+import { AuthenticationService } from "./non-odoo/authentication/authentication.service";
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(configService.getOdooTypeOrmConfig()),
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
     PartnersModule,
     LessonsModule,
@@ -48,10 +53,12 @@ import { StudentAttendancesService } from "./student-attendances/student-attenda
     ChannelsModule,
     ChannelTagsModule,
     VideosModule,
-    UsersModule,
+    UsersOdooMoudle,
     MessagesModule,
     AttachmentsModule,
     StudentAttendancesModule,
+    UsersModule,
+    AuthenticationModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -67,10 +74,12 @@ import { StudentAttendancesService } from "./student-attendances/student-attenda
     ChannelsService,
     ChannelTagsService,
     VideosService,
-    UsersService,
+    UsersOdooService,
     MessagesService,
     AttachmentsService,
     StudentAttendancesService,
+    UsersService,
+    AuthenticationService,
   ],
 })
 export class AppModule {}

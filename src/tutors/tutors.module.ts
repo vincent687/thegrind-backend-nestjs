@@ -6,7 +6,7 @@ import { Tutor } from "./entities/tutor.entity";
 import { AttachmentsModule } from "src/attachments/attachments.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Tutor]), AttachmentsModule],
+  imports: [TypeOrmModule.forFeature([Tutor], "odoo"), AttachmentsModule],
   controllers: [TutorsController],
   providers: [TutorsService],
   exports: [TypeOrmModule],

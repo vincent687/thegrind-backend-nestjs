@@ -8,7 +8,7 @@ import { Partner } from "./entities/partner.entity";
 @Injectable()
 export class PartnersService {
   constructor(
-    @InjectRepository(Partner)
+    @InjectRepository(Partner, "odoo")
     private PartnersRepository: Repository<Partner>
   ) {}
 

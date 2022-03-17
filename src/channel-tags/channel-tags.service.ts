@@ -8,7 +8,7 @@ import { ChannelTag } from "./entities/channel-tag.entity";
 @Injectable()
 export class ChannelTagsService {
   constructor(
-    @InjectRepository(ChannelTag)
+    @InjectRepository(ChannelTag, "odoo")
     private ChannelTagsRepository: Repository<ChannelTag>
   ) {}
 

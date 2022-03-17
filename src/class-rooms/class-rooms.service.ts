@@ -8,8 +8,8 @@ import { ClassRoom } from "./entities/class-room.entity";
 @Injectable()
 export class ClassRoomsService {
   constructor(
-    @InjectRepository(ClassRoom)
-    private classRoomsRepository: Repository<ClassRoom>
+    @InjectRepository(ClassRoom, "odoo")
+    private ClassRoomsRepository: Repository<ClassRoom>
   ) {}
 
   create(createClassRoomDto: CreateClassRoomDto) {
@@ -17,11 +17,11 @@ export class ClassRoomsService {
   }
 
   findAll() {
-    return this.classRoomsRepository.find();
+    return this.ClassRoomsRepository.find();
   }
 
   findOne(id: number) {
-    return this.classRoomsRepository.findOne({
+    return this.ClassRoomsRepository.findOne({
       where: {
         id: id,
       },

@@ -1,4 +1,4 @@
-import { ChannelChannelTag } from 'src/channel-tags/entities/channel-channel-tag.entity';
+import { ChannelChannelTag } from "src/channel-tags/entities/channel-channel-tag.entity";
 import {
   Entity,
   Column,
@@ -7,9 +7,9 @@ import {
   JoinTable,
   OneToMany,
   JoinColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity({ name: 'public.slide_channel', synchronize: false })
+@Entity({ name: "public.slide_channel", synchronize: false })
 export class Channel {
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +21,9 @@ export class Channel {
   description: string;
   @OneToMany(
     (type) => ChannelChannelTag,
-    (channelChannelTag) => channelChannelTag.channel,
+    (channelChannelTag) => channelChannelTag.channel
   )
   channelChannelTags: ChannelChannelTag[];
 }
+
+export default Channel;

@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Attachment } from "./entities/attachment.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Attachment])],
+  imports: [TypeOrmModule.forFeature([Attachment], "odoo")],
   controllers: [AttachmentsController],
   providers: [AttachmentsService],
   exports: [TypeOrmModule, AttachmentsService],

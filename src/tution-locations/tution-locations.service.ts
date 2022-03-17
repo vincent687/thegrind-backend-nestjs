@@ -8,7 +8,7 @@ import { TutionLocation } from "./entities/tution-location.entity";
 @Injectable()
 export class TutionLocationsService {
   constructor(
-    @InjectRepository(TutionLocation)
+    @InjectRepository(TutionLocation, "odoo")
     private TutionLocationsRepository: Repository<TutionLocation>
   ) {}
 

@@ -8,7 +8,7 @@ import { Lesson } from "./entities/lesson.entity";
 @Injectable()
 export class LessonsService {
   constructor(
-    @InjectRepository(Lesson)
+    @InjectRepository(Lesson, "odoo")
     private LessonsRepository: Repository<Lesson>
   ) {}
 
@@ -23,8 +23,6 @@ export class LessonsService {
       .leftJoinAndSelect("channelChannelTags.tag", "channelTags")
       .getMany();
   }
-
-  findVideos() {}
 
   findOne(id: number) {
     return this.LessonsRepository.createQueryBuilder("lesson")
