@@ -16,23 +16,23 @@ export class AuthenticationService {
   constructor(private readonly UsersService: UsersService) {}
 
   public async register(registrationData: RegisterDto) {
-    const hashedPassword = await bcrypt.hash(registrationData.password, 10);
-    try {
-      const createdUser = await this.UsersService.create({
-        ...registrationData,
-        password: hashedPassword,
-      });
-      createdUser.password = undefined;
-      return createdUser;
-    } catch (error) {
-      if (error?.code === PG_UNIQUE_VIOLATION) {
-        throw new HttpException(
-          "LoginId already exists",
-          HttpStatus.BAD_REQUEST
-        );
-      }
-      throw new HttpException("Server error", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    // const hashedPassword = await bcrypt.hash(registrationData.password, 10);
+    // try {
+    //   const createdUser = await this.UsersService.create({
+    //     ...registrationData,
+    //     password: hashedPassword,
+    //   });
+    //   createdUser.password = undefined;
+    //   return createdUser;
+    // } catch (error) {
+    //   if (error?.code === PG_UNIQUE_VIOLATION) {
+    //     throw new HttpException(
+    //       "LoginId already exists",
+    //       HttpStatus.BAD_REQUEST
+    //     );
+    //   }
+    //   throw new HttpException("Server error", HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
   }
   public async getAuthenticatedUser(loginId: string, password: string) {
     try {
@@ -41,7 +41,7 @@ export class AuthenticationService {
       const result: ReadUserDto = { ...user };
       return result;
     } catch (error) {
-      throw new HttpException("Password incorrect", HttpStatus.BAD_REQUEST);
+      // throw new HttpException("Password incorrect", HttpStatus.BAD_REQUEST);
     }
   }
 
