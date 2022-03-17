@@ -1,13 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { AttachmentsService } from './attachments.service';
-import { CreateAttachmentDto } from './dto/create-attachment.dto';
-import { UpdateAttachmentDto } from './dto/update-attachment.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { AttachmentsService } from "./attachments.service";
+import { CreateAttachmentDto } from "./dto/create-attachment.dto";
+import { UpdateAttachmentDto } from "./dto/update-attachment.dto";
 
-@ApiTags('Attachments')
-@Controller('attachments')
+@ApiTags("Attachments")
+@Controller("attachments")
 export class AttachmentsController {
-  constructor(private readonly attachmentsService: AttachmentsService) { }
+  constructor(private readonly attachmentsService: AttachmentsService) {}
 
   @Post()
   create(@Body() createAttachmentDto: CreateAttachmentDto) {
@@ -19,18 +27,21 @@ export class AttachmentsController {
     return this.attachmentsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.attachmentsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAttachmentDto: UpdateAttachmentDto) {
+  @Patch(":id")
+  update(
+    @Param("id") id: string,
+    @Body() updateAttachmentDto: UpdateAttachmentDto
+  ) {
     return this.attachmentsService.update(+id, updateAttachmentDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.attachmentsService.remove(+id);
   }
 }
