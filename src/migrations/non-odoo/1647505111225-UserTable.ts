@@ -14,6 +14,6 @@ export class UserTable1647505111225 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`Delete * from user`);
+    await queryRunner.query(`Delete from public.user`);
   }
 }

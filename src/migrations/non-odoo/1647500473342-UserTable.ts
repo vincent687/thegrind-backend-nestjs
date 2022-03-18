@@ -9,13 +9,13 @@ export class UserTable1647500473342 implements MigrationInterface {
           {
             name: "id",
             type: "int4",
-            isPrimary: true,
             isGenerated: true,
             generationStrategy: "increment",
           },
           {
             name: "loginId",
             type: "varchar",
+            isPrimary: true,
             isNullable: false,
           },
           {
@@ -31,6 +31,7 @@ export class UserTable1647500473342 implements MigrationInterface {
           {
             name: "email",
             type: "varchar",
+            isPrimary: true,
             isNullable: false,
           },
         ],
@@ -40,6 +41,6 @@ export class UserTable1647500473342 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`DROP TABLE user`);
+    queryRunner.query(`DROP TABLE public.user`);
   }
 }

@@ -3,6 +3,7 @@ import {
   HttpService,
   HttpStatus,
   Injectable,
+  Logger,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Http2ServerRequest } from "http2";
@@ -49,6 +50,22 @@ export class UsersService {
     return `This action removes a #${id} usersFront`;
   }
 
+  async checkUserExistById(loginId: string) {
+    const userById = await this.UsersRepository.findOne({ loginId });
+    if (userById) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  async checkUserExistByEmail(email: string) {
+    const userByEmail = await this.UsersRepository.findOne({ email });
+    if (userByEmail) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   async getByLoginId(loginId: string) {
     const user = await this.UsersRepository.findOne({ loginId });
     if (user) {

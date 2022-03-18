@@ -17,6 +17,13 @@ export class AuthenticationService {
 
   public async register(registrationData: RegisterDto) {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
+    if (await this.UsersService.checkUserExistById(registrationData.loginId)) {
+      throw new HttpException("LoginId already exists", HttpStatus.BAD_REQUEST);
+    }
+    if (await this.UsersService.checkUserExistByEmail(registrationData.email)) {
+      throw new HttpException("Email already exists", HttpStatus.BAD_REQUEST);
+    }
+
     try {
       const createdUser = await this.UsersService.create({
         ...registrationData,
@@ -41,7 +48,7 @@ export class AuthenticationService {
       const result: ReadUserDto = { ...user };
       return result;
     } catch (error) {
-      // throw new HttpException("Password incorrect", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Password incorrect", HttpStatus.BAD_REQUEST);
     }
   }
 
