@@ -69,6 +69,7 @@ export class VideosService {
           const segments = key.url.split("/");
           const last = segments.pop() || segments.pop();
           thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+          key.url = `https://www.youtube.com/embed/${last}`;
         }
         if (key.url.includes("youtube")) {
           const segments = key.url.split("?");
@@ -76,6 +77,7 @@ export class VideosService {
           const params = new URLSearchParams(query);
           if (params.has("v")) {
             thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+            key.url = `https://www.youtube.com/embed/${params.get("v")}`;
           }
         }
       }
@@ -108,6 +110,7 @@ export class VideosService {
             const segments = key.url.split("/");
             const last = segments.pop() || segments.pop();
             thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+            key.url = `https://www.youtube.com/embed/${last}`;
           }
           if (key.url.includes("youtube")) {
             const segments = key.url.split("?");
@@ -115,6 +118,7 @@ export class VideosService {
             const params = new URLSearchParams(query);
             if (params.has("v")) {
               thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+              key.url = `https://www.youtube.com/embed/${params.get("v")}`;
             }
           }
         }
@@ -143,6 +147,16 @@ export class VideosService {
         const segemnts = video.url.split("/");
         const last = segemnts.pop() || segemnts.pop();
         thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+        video.url = `https://www.youtube.com/embed/${last}`;
+      }
+      if (video.url.includes("youtube")) {
+        const segments = video.url.split("?");
+        const query = segments[1];
+        const params = new URLSearchParams(query);
+        if (params.has("v")) {
+          thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+          video.url = `https://www.youtube.com/embed/${params.get("v")}`;
+        }
       }
     }
 
