@@ -48,7 +48,7 @@ export class AttachmentsService {
       ...attachment,
       url:
         attachment != null
-          ? `http://35.185.147.125:10012/web/content/${attachment.id}`
+          ? `http://thegrind-app.online/web/content/${attachment.id}`
           : "",
     };
     return result;
