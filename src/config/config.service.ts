@@ -18,6 +18,7 @@ import { StudentAttendance } from "../student-attendances/entities/student-atten
 import { CompanyUser } from "../users-odoo/entities/company-user.entity";
 import { User } from "src/non-odoo/users/entities/users.entity";
 import { join } from "path";
+import { Logger } from "@nestjs/common";
 
 require("dotenv").config();
 
@@ -42,11 +43,13 @@ const ALL_ENTITIES = [
 ];
 
 const ENTITIES = [User];
-class ConfigService {
+export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 
   private getValue(key: string, throwOnMissing = true): string {
+    Logger.log("key", key);
     const value = this.env[key];
+    Logger.log("getvalue", value);
     if (!value && throwOnMissing) {
       throw new Error(`config error - missing env.${key}`);
     }
@@ -112,6 +115,15 @@ class ConfigService {
       },
 
       ssl: this.isProduction(),
+    };
+  }
+
+  public getGcpStorageConfig() {
+    return {
+      projectId: this.getValue("PROJECT_ID"),
+      bucketName: this.getValue("GCS_BUCKET_NAME"),
+      email: this.getValue("CLIENT_EMAIL"),
+      key: this.getValue("PRIVATE_KEY"),
     };
   }
 }

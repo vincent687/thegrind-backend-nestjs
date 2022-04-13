@@ -5,7 +5,7 @@ import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { PartnersModule } from "./partners/partners.module";
 import { PartnersService } from "./partners/partners.service";
-import { configService } from "./config/config.service";
+// import { configService, ConfigService } from "./config/config.service";
 import { LessonsModule } from "./lessons/lessons.module";
 import { LessonsService } from "./lessons/lessons.service";
 import { TutorsModule } from "./tutors/tutors.module";
@@ -37,6 +37,12 @@ import { UsersModule } from "./non-odoo/users/users.module";
 import { UsersService } from "./non-odoo/users/users.service";
 import { AuthenticationModule } from "./non-odoo/authentication/authentication.module";
 import { AuthenticationService } from "./non-odoo/authentication/authentication.service";
+import { GcpStorageModule } from "./provider/gcpStorageProvider.module";
+import { StorageModule } from "./non-odoo/storage/storage.module";
+import { StorageService } from "./non-odoo/storage/storage.service";
+import { ConfigModule } from "./config/config.module";
+import { ConfigService, configService } from "./config/config.service";
+import { FileModule } from "./file/file.module";
 
 @Module({
   imports: [
@@ -59,6 +65,11 @@ import { AuthenticationService } from "./non-odoo/authentication/authentication.
     StudentAttendancesModule,
     UsersModule,
     AuthenticationModule,
+    StorageModule,
+    // ConfigModule,
+    ConfigModule,
+    GcpStorageModule,
+    FileModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -80,6 +91,9 @@ import { AuthenticationService } from "./non-odoo/authentication/authentication.
     StudentAttendancesService,
     UsersService,
     AuthenticationService,
+    StorageService,
+    ConfigService,
+    //ConfigService,
   ],
 })
 export class AppModule {}
