@@ -65,7 +65,11 @@ export class FilesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} file`;
+    return this.FilesRepository.findOne({
+      where: {
+        id: id,
+      },
+    });
   }
 
   update(id: number, updateFileDto: UpdateFileDto) {
