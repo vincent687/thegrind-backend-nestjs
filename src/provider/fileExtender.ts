@@ -11,7 +11,10 @@ export class FileExtender implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
     req.file["filename"] = req.body.filename;
-    req.file["staffId"] = Number(req.body.staffId);
+    req.file["userId"] = Number(req.body.userId);
+    req.file["classId"] = Number(req.body.classId);
+    req.file["type"] = Number(req.body.type);
+    req.file["url"] = req.body.url;
     return next.handle();
   }
 }

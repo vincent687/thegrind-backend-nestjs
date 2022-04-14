@@ -19,6 +19,7 @@ import { CompanyUser } from "../users-odoo/entities/company-user.entity";
 import { User } from "src/non-odoo/users/entities/users.entity";
 import { join } from "path";
 import { Logger } from "@nestjs/common";
+import { File } from "src/non-odoo/files/entities/file.entity";
 
 require("dotenv").config();
 
@@ -42,7 +43,7 @@ const ALL_ENTITIES = [
   CompanyUser,
 ];
 
-const ENTITIES = [User];
+const ENTITIES = [User, File];
 export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 

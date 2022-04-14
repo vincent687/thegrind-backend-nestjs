@@ -42,7 +42,8 @@ import { StorageModule } from "./non-odoo/storage/storage.module";
 import { StorageService } from "./non-odoo/storage/storage.service";
 import { ConfigModule } from "./config/config.module";
 import { ConfigService, configService } from "./config/config.service";
-import { FileModule } from "./file/file.module";
+import { FilesModule } from "./non-odoo/files/files.module";
+import { FilesService } from "./non-odoo/files/files.service";
 
 @Module({
   imports: [
@@ -69,7 +70,7 @@ import { FileModule } from "./file/file.module";
     // ConfigModule,
     ConfigModule,
     GcpStorageModule,
-    FileModule,
+    FilesModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -93,6 +94,7 @@ import { FileModule } from "./file/file.module";
     AuthenticationService,
     StorageService,
     ConfigService,
+    FilesService,
     //ConfigService,
   ],
 })

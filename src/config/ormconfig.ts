@@ -2,10 +2,11 @@ import * as dotenv from "dotenv";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { join } from "path";
 import { User } from "src/non-odoo/users/entities/users.entity";
+import { File } from "src/non-odoo/files/entities/file.entity";
 
 dotenv.config();
 
-const ENTITIES = [User];
+const ENTITIES = [User, File];
 
 dotenv.config();
 
