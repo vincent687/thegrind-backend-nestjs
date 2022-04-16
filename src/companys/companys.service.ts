@@ -1,9 +1,10 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateCompanyDto } from "./dto/create-company.dto";
 import { UpdateCompanyDto } from "./dto/update-company.dto";
 import { Company } from "./entities/company.entity";
+import { Employee } from "../employees/entities/employee.entity";
 
 @Injectable()
 export class CompanysService {
@@ -26,7 +27,15 @@ export class CompanysService {
       .getMany();
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
+    var t = await this.CompanysRepository.createQueryBuilder("company")
+      .leftJoinAndSelect("company.companyInfo", "companyInfo")
+      .leftJoinAndSelect("company.employees", "companyUser")
+      .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("user.partner", "partner")
+      .where("company.id = :id and user.id != 2", { id })
+      .getOne();
+
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.companyInfo", "companyInfo")
       .leftJoinAndSelect("company.employees", "companyUser")

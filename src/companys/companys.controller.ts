@@ -77,30 +77,31 @@ export class CompanysController {
       "res.company",
       company.id
     );
-    companyFinal.attachment = companyAttachment;
-    companyFinal.id = company.id;
-    companyFinal.email = company.email;
-    companyFinal.companyInfo = company.companyInfo;
-    companyFinal.name = company.name;
-    var companyUsersFinal: ReadCompanyUserDto[] = [];
-    company.employees.forEach(async (k) => {
-      var companyUserFinal = new ReadCompanyUserDto();
-      companyUserFinal.cid = k.cid;
-      companyUserFinal.company = k.company;
-      companyUserFinal.user_id = k.user_id;
-      companyUserFinal.user = new ReadUserDto();
-      companyUserFinal.user.id = k.user.id;
-      companyUserFinal.user.companys = k.user.companys;
-      var attachment = await this.attachmentsService.getImageByTable(
-        "res.partner",
-        k.user.partner.id
-      );
-      companyUserFinal.user.partner = { ...k.user.partner, attachment };
-      companyUsersFinal.push(companyUserFinal);
-    });
+    return company;
+    // companyFinal.attachment = companyAttachment;
+    // companyFinal.id = company.id;
+    // companyFinal.email = company.email;
+    // companyFinal.companyInfo = company.companyInfo;
+    // companyFinal.name = company.name;
+    // var companyUsersFinal: ReadCompanyUserDto[] = [];
+    // company.employees.forEach(async (k) => {
+    //   var companyUserFinal = new ReadCompanyUserDto();
+    //   companyUserFinal.cid = k.cid;
+    //   companyUserFinal.company = k.company;
+    //   companyUserFinal.user_id = k.user_id;
+    //   companyUserFinal.user = new ReadUserDto();
+    //   companyUserFinal.user.id = k.user.id;
+    //   companyUserFinal.user.companys = k.user.companys;
+    //   var attachment = await this.attachmentsService.getImageByTable(
+    //     "res.partner",
+    //     k.user.partner.id
+    //   );
+    //   companyUserFinal.user.partner = { ...k.user.partner, attachment };
+    //   companyUsersFinal.push(companyUserFinal);
+    // });
 
-    companyFinal.employees = companyUsersFinal;
-    return companyFinal;
+    // companyFinal.employees = companyUsersFinal;
+    // return companyFinal;
   }
 
   @Patch(":id")
