@@ -28,6 +28,14 @@ export class PartnersService {
     });
   }
 
+  findByEmail(email: string) {
+    return this.PartnersRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
   update(id: number, updatePartnerDto: UpdatePartnerDto) {
     return `This action updates a #${id} partner`;
   }

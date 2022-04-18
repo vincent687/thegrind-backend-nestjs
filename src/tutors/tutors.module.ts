@@ -9,6 +9,6 @@ import { AttachmentsModule } from "src/attachments/attachments.module";
   imports: [TypeOrmModule.forFeature([Tutor], "odoo"), AttachmentsModule],
   controllers: [TutorsController],
   providers: [TutorsService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, TutorsService],
 })
 export class TutorsModule {}

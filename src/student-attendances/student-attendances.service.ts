@@ -20,8 +20,27 @@ export class StudentAttendancesService {
     return this.StudentAttendancesRepository.find();
   }
 
+  getStudentClass(partnerId: number) {
+    return this.StudentAttendancesRepository.createQueryBuilder(
+      "studentAttendance"
+    )
+      .leftJoinAndSelect("studentAttendance.tutor", "tutor")
+      .where("studentAttendance.partner_id = :partnerId", { partnerId })
+      .getMany();
+
+    // return this.StudentAttendancesRepository.findOne({
+    //   where: {
+    //     partner_id: partnerId,
+    //   },
+    // });
+  }
   findOne(id: number) {
-    return `This action returns a #${id} studentAttendance`;
+    return this.StudentAttendancesRepository.createQueryBuilder(
+      "studentAttendance"
+    )
+      .leftJoinAndSelect("studentAttendance.tutor", "tutor")
+      .where("studentAttendance.id = :id", { id })
+      .getOne();
   }
 
   update(id: number, updateStudentAttendanceDto: UpdateStudentAttendanceDto) {

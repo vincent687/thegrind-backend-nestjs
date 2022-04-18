@@ -16,6 +16,7 @@ import { CompanysService } from "./companys.service";
 import { CreateCompanyDto } from "./dto/create-company.dto";
 import { ReadCompanyDto } from "./dto/read-company.dto";
 import { UpdateCompanyDto } from "./dto/update-company.dto";
+import { Logger } from "@nestjs/common";
 
 @ApiTags("Companys")
 @Controller("companys")
@@ -77,31 +78,31 @@ export class CompanysController {
       "res.company",
       company.id
     );
-    return company;
-    // companyFinal.attachment = companyAttachment;
-    // companyFinal.id = company.id;
-    // companyFinal.email = company.email;
-    // companyFinal.companyInfo = company.companyInfo;
-    // companyFinal.name = company.name;
-    // var companyUsersFinal: ReadCompanyUserDto[] = [];
-    // company.employees.forEach(async (k) => {
-    //   var companyUserFinal = new ReadCompanyUserDto();
-    //   companyUserFinal.cid = k.cid;
-    //   companyUserFinal.company = k.company;
-    //   companyUserFinal.user_id = k.user_id;
-    //   companyUserFinal.user = new ReadUserDto();
-    //   companyUserFinal.user.id = k.user.id;
-    //   companyUserFinal.user.companys = k.user.companys;
-    //   var attachment = await this.attachmentsService.getImageByTable(
-    //     "res.partner",
-    //     k.user.partner.id
-    //   );
-    //   companyUserFinal.user.partner = { ...k.user.partner, attachment };
-    //   companyUsersFinal.push(companyUserFinal);
-    // });
 
-    // companyFinal.employees = companyUsersFinal;
-    // return companyFinal;
+    companyFinal.attachment = companyAttachment;
+    companyFinal.id = company.id;
+    companyFinal.email = company.email;
+    companyFinal.companyInfo = company.companyInfo;
+    companyFinal.name = company.name;
+    var companyUsersFinal: ReadCompanyUserDto[] = [];
+    company.employees.forEach(async (k) => {
+      var companyUserFinal = new ReadCompanyUserDto();
+      companyUserFinal.cid = k.cid;
+      companyUserFinal.company = k.company;
+      companyUserFinal.user_id = k.user_id;
+      companyUserFinal.user = new ReadUserDto();
+      companyUserFinal.user.id = k.user.id;
+      companyUserFinal.user.companys = k.user.companys;
+      var attachment = await this.attachmentsService.getImageByTable(
+        "res.partner",
+        k.user.partner.id
+      );
+      companyUserFinal.user.partner = { ...k.user.partner, attachment };
+      companyUsersFinal.push(companyUserFinal);
+    });
+    Logger.log(companyUsersFinal);
+    companyFinal.employees = companyUsersFinal;
+    return companyFinal;
   }
 
   @Patch(":id")
