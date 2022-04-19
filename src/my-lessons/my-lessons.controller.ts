@@ -16,6 +16,9 @@ import { TutorsService } from "src/tutors/tutors.service";
 import { Tutor } from "src/tutors/entities/tutor.entity";
 import { ApiTags } from "@nestjs/swagger";
 import { Logger } from "@nestjs/common";
+import { ReadTutorDto } from "src/tutors/dto/read-tutor.dto";
+import { AttachmentsService } from "src/attachments/attachments.service";
+import { ReadEmployeeDto } from "src/employees/dto/read-employee.dto";
 
 @ApiTags("My Lesson")
 @Controller("my-lessons")
@@ -24,7 +27,8 @@ export class MyLessonsController {
     private readonly myLessonsService: MyLessonsService,
     private readonly partnersService: PartnersService,
     private readonly studentAttendancesService: StudentAttendancesService,
-    private readonly tutorsService: TutorsService
+    private readonly tutorsService: TutorsService,
+    private readonly attachmentsService: AttachmentsService
   ) {}
 
   @Post()
@@ -46,7 +50,22 @@ export class MyLessonsController {
     var promise = studentAttdendances.map(async (key, index) => {
       if (key.tutor) {
         Logger.log("id", key.tutor.id);
-        return await this.tutorsService.findOne(+key.tutor.id);
+        var tutor = await this.tutorsService.findOne(+key.tutor.id);
+        var tutorFinal = new ReadTutorDto();
+        var attachment = await this.attachmentsService.getImageByTable(
+          "hr.employee",
+          tutor.employee.id
+        );
+        var attachment2 = await this.attachmentsService.getImageByTable(
+          "slide.channel",
+          tutor.course.id
+        );
+        var newEmployee = new ReadEmployeeDto();
+        newEmployee = { ...tutor.employee, attachment };
+        var newChannel = { ...tutor.course, attachment: attachment2 };
+        tutorFinal = { ...tutor, employee: newEmployee, course: newChannel };
+
+        return tutorFinal;
       }
     });
     return Promise.all(promise);
