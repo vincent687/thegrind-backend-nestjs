@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { MyLessonsService } from "./my-lessons.service";
 import { CreateMyLessonDto } from "./dto/create-my-lesson.dto";
@@ -19,6 +20,7 @@ import { Logger } from "@nestjs/common";
 import { ReadTutorDto } from "src/tutors/dto/read-tutor.dto";
 import { AttachmentsService } from "src/attachments/attachments.service";
 import { ReadEmployeeDto } from "src/employees/dto/read-employee.dto";
+import { OutPut } from "../interface/output";
 
 @ApiTags("My Lesson")
 @Controller("my-lessons")
@@ -42,12 +44,27 @@ export class MyLessonsController {
   }
 
   @Get("/email/:email")
-  async getMyLessons(@Param("email") email: string) {
+  async getMyLessons(
+    @Param("email") email: string,
+    @Query("page") page: number,
+    @Query("pageSize") pageSize: number
+  ) {
     var user = await this.partnersService.findByEmail(email);
     var studentAttdendances =
       await this.studentAttendancesService.getStudentClass(user.id);
     // var result: Tutor[] = [];
-    var promise = studentAttdendances.map(async (key, index) => {
+
+    var finalStudentAttdendances = studentAttdendances.slice(
+      (page - 1) * pageSize,
+      page * pageSize
+    );
+    var result: OutPut = {
+      data: [],
+      meta: {
+        total: studentAttdendances.length,
+      },
+    };
+    var promise = finalStudentAttdendances.map(async (key, index) => {
       if (key.tutor) {
         Logger.log("id", key.tutor.id);
         var tutor = await this.tutorsService.findOne(+key.tutor.id);
@@ -68,7 +85,8 @@ export class MyLessonsController {
         return tutorFinal;
       }
     });
-    return Promise.all(promise);
+    result.data = await Promise.all(promise);
+    return result;
   }
 
   @Get(":id")
