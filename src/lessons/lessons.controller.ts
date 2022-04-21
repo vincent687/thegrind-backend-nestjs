@@ -41,6 +41,11 @@ export class LessonsController {
     return result;
   }
 
+  @Get("/class/:id")
+  async findAllByClassId(@Param("id") id: string) {
+    return this.lessonsService.findAllByClassId(+id);
+  }
+
   @Patch(":id")
   update(@Param("id") id: string, @Body() updateLessonDto: UpdateLessonDto) {
     return this.lessonsService.update(+id, updateLessonDto);

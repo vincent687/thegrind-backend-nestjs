@@ -45,6 +45,7 @@ import { ConfigService, configService } from "./config/config.service";
 import { FilesModule } from "./non-odoo/files/files.module";
 import { FilesService } from "./non-odoo/files/files.service";
 import { MyLessonsModule } from './my-lessons/my-lessons.module';
+import { MyCalendarModule } from './my-calendar/my-calendar.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { MyLessonsModule } from './my-lessons/my-lessons.module';
     GcpStorageModule,
     FilesModule,
     MyLessonsModule,
+    MyCalendarModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],

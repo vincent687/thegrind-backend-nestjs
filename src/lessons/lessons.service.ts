@@ -24,6 +24,15 @@ export class LessonsService {
       .getMany();
   }
 
+  findAllByClassId(id: number): Promise<Lesson[]> {
+    return this.LessonsRepository.createQueryBuilder("lesson")
+      .leftJoinAndSelect("lesson.course", "course")
+      .leftJoinAndSelect("course.channelChannelTags", "channelChannelTags")
+      .leftJoinAndSelect("channelChannelTags.tag", "channelTags")
+      .where("lesson.custom_class_id = :id", { id })
+      .getMany();
+  }
+
   findOne(id: number) {
     return this.LessonsRepository.createQueryBuilder("lesson")
       .leftJoinAndSelect("lesson.course", "course")

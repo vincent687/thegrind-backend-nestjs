@@ -9,6 +9,6 @@ import { VideosModule } from "../videos/videos.module";
   imports: [TypeOrmModule.forFeature([Lesson], "odoo"), VideosModule],
   controllers: [LessonsController],
   providers: [LessonsService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, LessonsService],
 })
 export class LessonsModule {}
