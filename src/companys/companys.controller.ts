@@ -97,8 +97,10 @@ export class CompanysController {
     companyFinal.email = company.email;
     companyFinal.companyInfo = company.companyInfo;
     companyFinal.name = company.name;
+    Logger.log(company.employees);
     var companyUsersFinal: ReadCompanyUserDto[] = [];
-    company.employees.forEach(async (k) => {
+    var promise = await company.employees.map(async (k) => {
+      Logger.log(k.user_id);
       var companyUserFinal = new ReadCompanyUserDto();
       companyUserFinal.cid = k.cid;
       companyUserFinal.company = k.company;
@@ -112,8 +114,10 @@ export class CompanysController {
       );
       companyUserFinal.user.partner = { ...k.user.partner, attachment };
       companyUsersFinal.push(companyUserFinal);
+      Logger.log(companyUserFinal);
     });
     Logger.log(companyUsersFinal);
+    await Promise.all(promise);
     companyFinal.employees = companyUsersFinal;
     return companyFinal;
   }
