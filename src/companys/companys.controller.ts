@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AttachmentsService } from "src/attachments/attachments.service";
@@ -17,6 +18,7 @@ import { CreateCompanyDto } from "./dto/create-company.dto";
 import { ReadCompanyDto } from "./dto/read-company.dto";
 import { UpdateCompanyDto } from "./dto/update-company.dto";
 import { Logger } from "@nestjs/common";
+import { OutPut } from "src/interface/output";
 
 @ApiTags("Companys")
 @Controller("companys")
@@ -32,22 +34,32 @@ export class CompanysController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(
+    @Query("page") page: number,
+    @Query("pageSize") pageSize: number
+  ) {
     var companys = await this.companysService.findAll();
+    var sliceCompanys = companys.slice((page - 1) * pageSize, page * pageSize);
+    var result: OutPut = {
+      data: [],
+      meta: {
+        total: companys.length,
+      },
+    };
     var companysFinal: ReadCompanyDto[] = [];
-    for (var i = 0; i < companys.length; i++) {
+    for (var i = 0; i < sliceCompanys.length; i++) {
       var companyFinal = new ReadCompanyDto();
       var companyAttachment = await this.attachmentsService.getImageByTable(
         "res.company",
-        companys[i].id
+        sliceCompanys[i].id
       );
       companyFinal.attachment = companyAttachment;
-      companyFinal.id = companys[i].id;
-      companyFinal.email = companys[i].email;
-      companyFinal.companyInfo = companys[i].companyInfo;
-      companyFinal.name = companys[i].name;
+      companyFinal.id = sliceCompanys[i].id;
+      companyFinal.email = sliceCompanys[i].email;
+      companyFinal.companyInfo = sliceCompanys[i].companyInfo;
+      companyFinal.name = sliceCompanys[i].name;
       var companyUsersFinal: ReadCompanyUserDto[] = [];
-      companys[i].employees.forEach(async (k) => {
+      sliceCompanys[i].employees.forEach(async (k) => {
         var companyUserFinal = new ReadCompanyUserDto();
         companyUserFinal.cid = k.cid;
         companyUserFinal.company = k.company;
@@ -67,7 +79,8 @@ export class CompanysController {
       companyFinal.employees = companyUsersFinal;
       companysFinal.push(companyFinal);
     }
-    return companysFinal;
+    result.data = companysFinal;
+    return result;
   }
 
   @Get(":id")
