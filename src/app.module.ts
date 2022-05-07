@@ -44,8 +44,11 @@ import { ConfigModule } from "./config/config.module";
 import { ConfigService, configService } from "./config/config.service";
 import { FilesModule } from "./non-odoo/files/files.module";
 import { FilesService } from "./non-odoo/files/files.service";
-import { MyLessonsModule } from './my-lessons/my-lessons.module';
-import { MyCalendarModule } from './my-calendar/my-calendar.module';
+import { MyLessonsModule } from "./my-lessons/my-lessons.module";
+import { MyCalendarModule } from "./my-calendar/my-calendar.module";
+import { CompanysNonOdooModule } from "./non-odoo/companys/companys.module";
+import { SportsModule } from "./non-odoo/sports/sports.module";
+import { SportsService } from "./non-odoo/sports/sports.service";
 
 @Module({
   imports: [
@@ -75,6 +78,8 @@ import { MyCalendarModule } from './my-calendar/my-calendar.module';
     FilesModule,
     MyLessonsModule,
     MyCalendarModule,
+    CompanysNonOdooModule,
+    SportsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -99,6 +104,7 @@ import { MyCalendarModule } from './my-calendar/my-calendar.module';
     StorageService,
     ConfigService,
     FilesService,
+    SportsService,
     //ConfigService,
   ],
 })

@@ -9,6 +9,7 @@ export class UserTable1647505111225 implements MigrationInterface {
         password: "12345678",
         email: "vincentwong687@gmail.com",
         loginId: "vincent",
+        type: "coach",
       })
     );
   }

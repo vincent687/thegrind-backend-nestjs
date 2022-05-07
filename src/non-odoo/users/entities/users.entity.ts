@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  OneToMany,
+  JoinColumn,
+} from "typeorm";
+import { CompanyUserNonOdoo } from "./company-user.entity";
 
 @Entity({ name: "user", synchronize: false })
 export class User {
@@ -12,4 +20,9 @@ export class User {
   name: string;
   @PrimaryColumn()
   email: string;
+  @Column()
+  type: string;
+  @OneToMany((type) => CompanyUserNonOdoo, (companyUser) => companyUser.user)
+  @JoinColumn()
+  companys: CompanyUserNonOdoo[];
 }

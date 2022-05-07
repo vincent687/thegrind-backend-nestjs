@@ -3,10 +3,13 @@ import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 import { join } from "path";
 import { User } from "src/non-odoo/users/entities/users.entity";
 import { File } from "src/non-odoo/files/entities/file.entity";
+import { Sport } from "src/non-odoo/sports/entities/sport.entity";
+import { CompanyNonOdoo } from "src/non-odoo/companys/entities/company.entity";
+import { CompanyUserNonOdoo } from "src/non-odoo/users/entities/company-user.entity";
 
 dotenv.config();
 
-const ENTITIES = [User, File];
+const ENTITIES = [User, File, Sport, CompanyNonOdoo, CompanyUserNonOdoo];
 
 dotenv.config();
 

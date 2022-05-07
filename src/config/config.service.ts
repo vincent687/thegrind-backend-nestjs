@@ -20,6 +20,9 @@ import { User } from "src/non-odoo/users/entities/users.entity";
 import { join } from "path";
 import { Logger } from "@nestjs/common";
 import { File } from "src/non-odoo/files/entities/file.entity";
+import { Sport } from "src/non-odoo/sports/entities/sport.entity";
+import { CompanyNonOdoo } from "src/non-odoo/companys/entities/company.entity";
+import { CompanyUserNonOdoo } from "src/non-odoo/users/entities/company-user.entity";
 
 require("dotenv").config();
 
@@ -43,7 +46,7 @@ const ALL_ENTITIES = [
   CompanyUser,
 ];
 
-const ENTITIES = [User, File];
+const ENTITIES = [User, File, Sport, CompanyNonOdoo, CompanyUserNonOdoo];
 export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 
