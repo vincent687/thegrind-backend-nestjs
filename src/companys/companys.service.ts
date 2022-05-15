@@ -28,14 +28,6 @@ export class CompanysService {
   }
 
   async findOne(id: number) {
-    var t = await this.CompanysRepository.createQueryBuilder("company")
-      .leftJoinAndSelect("company.companyInfo", "companyInfo")
-      .leftJoinAndSelect("company.employees", "companyUser")
-      .leftJoinAndSelect("companyUser.user", "user")
-      .leftJoinAndSelect("user.partner", "partner")
-      .where("company.id = :id and user.id != 2", { id })
-      .getOne();
-
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.companyInfo", "companyInfo")
       .leftJoinAndSelect("company.employees", "companyUser")

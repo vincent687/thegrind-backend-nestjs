@@ -4,9 +4,10 @@ import { CompanysController } from "./companys.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { CompanyNonOdoo } from "./entities/company.entity";
 import { CompanyUserNonOdoo } from "../users/entities/company-user.entity";
+import { UsersModule } from "../users/users.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CompanyNonOdoo], "nonodoo")],
+  imports: [TypeOrmModule.forFeature([CompanyNonOdoo], "nonodoo"), UsersModule],
   controllers: [CompanysController],
   providers: [CompanysService],
   exports: [TypeOrmModule, CompanysService],

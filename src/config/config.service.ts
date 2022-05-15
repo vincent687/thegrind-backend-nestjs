@@ -23,6 +23,11 @@ import { File } from "src/non-odoo/files/entities/file.entity";
 import { Sport } from "src/non-odoo/sports/entities/sport.entity";
 import { CompanyNonOdoo } from "src/non-odoo/companys/entities/company.entity";
 import { CompanyUserNonOdoo } from "src/non-odoo/users/entities/company-user.entity";
+import { Tag } from "../non-odoo/tags/entities/tag.entity";
+import { CourseStudent } from "src/non-odoo/users/entities/course-student.entity";
+import { CourseTutor } from "src/non-odoo/users/entities/course-tutor.entity";
+import { Course } from "src/non-odoo/courses/entities/course.entity";
+import { CourseTag } from "src/non-odoo/tags/entities/course-tag.entity";
 
 require("dotenv").config();
 
@@ -46,7 +51,18 @@ const ALL_ENTITIES = [
   CompanyUser,
 ];
 
-const ENTITIES = [User, File, Sport, CompanyNonOdoo, CompanyUserNonOdoo];
+const ENTITIES = [
+  User,
+  File,
+  Sport,
+  CompanyNonOdoo,
+  CompanyUserNonOdoo,
+  Tag,
+  Course,
+  CourseTag,
+  CourseStudent,
+  CourseTutor,
+];
 export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 

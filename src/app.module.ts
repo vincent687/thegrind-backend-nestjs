@@ -49,7 +49,9 @@ import { MyCalendarModule } from "./my-calendar/my-calendar.module";
 import { CompanysNonOdooModule } from "./non-odoo/companys/companys.module";
 import { SportsModule } from "./non-odoo/sports/sports.module";
 import { SportsService } from "./non-odoo/sports/sports.service";
-
+import { CoursesModule } from "./non-odoo/courses/courses.module";
+import { TagsModule } from "./non-odoo/tags/tags.module";
+import { TagsService } from "./non-odoo/tags/tags.service";
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getOdooTypeOrmConfig()),
@@ -80,6 +82,8 @@ import { SportsService } from "./non-odoo/sports/sports.service";
     MyCalendarModule,
     CompanysNonOdooModule,
     SportsModule,
+    CoursesModule,
+    TagsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -105,6 +109,7 @@ import { SportsService } from "./non-odoo/sports/sports.service";
     ConfigService,
     FilesService,
     SportsService,
+    TagsService,
     //ConfigService,
   ],
 })

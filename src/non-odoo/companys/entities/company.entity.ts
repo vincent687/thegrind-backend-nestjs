@@ -28,6 +28,10 @@ export class CompanyNonOdoo {
     nullable: false,
   })
   types: Array<Sport>;
-  @OneToMany((type) => CompanyUserNonOdoo, (companyUser) => companyUser.company)
+  @OneToMany(
+    (type) => CompanyUserNonOdoo,
+    (companyUser) => companyUser.company,
+    { cascade: ["insert", "update"] }
+  )
   users: CompanyUserNonOdoo[];
 }
