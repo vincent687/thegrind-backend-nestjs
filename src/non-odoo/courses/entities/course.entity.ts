@@ -23,6 +23,8 @@ export class Course {
   @Column()
   created_date: Date;
   @Column()
+  course_email: string;
+  @Column()
   companyId: number;
   @OneToMany((type) => CourseTutor, (courseUser) => courseUser.course, {
     cascade: ["insert", "update"],

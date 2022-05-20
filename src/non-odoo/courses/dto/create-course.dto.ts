@@ -14,4 +14,5 @@ export class CreateCourseDto {
   students: number[];
   courseTags: number[];
   companyId: number;
+  course_email: string;
 }
