@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CourseTable1652620998440 implements MigrationInterface {
+export class CompanyTable1652620998440 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "course",
+        name: "company",
         columns: [
           {
             name: "id",
@@ -19,34 +19,23 @@ export class CourseTable1652620998440 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: "description",
+            name: "email",
             type: "varchar",
             isNullable: false,
           },
           {
-            name: "start_date",
-            type: "timestamp",
-            isNullable: true,
-          },
-          {
-            name: "end_date",
-            type: "timestamp",
-            isNullable: true,
-          },
-          {
-            name: "location",
+            name: "companyInfo",
             type: "varchar",
             isNullable: true,
           },
           {
-            name: "createdby_user",
-            type: "int4",
-            isNullable: false,
+            name: "establishDate",
+            type: "date",
+            isNullable: true,
           },
           {
-            name: "created_date",
-            type: "timestamp",
-            default: "now()",
+            name: "types",
+            type: "jsonb",
             isNullable: false,
           },
         ],
@@ -56,6 +45,6 @@ export class CourseTable1652620998440 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`DROP TABLE public.course`);
+    queryRunner.query(`DROP TABLE public.company`);
   }
 }

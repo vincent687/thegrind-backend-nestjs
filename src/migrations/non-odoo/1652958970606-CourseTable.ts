@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CompanyTable1651916869607 implements MigrationInterface {
+export class CourseTable1652958970606 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "company",
+        name: "course",
         columns: [
           {
             name: "id",
@@ -14,28 +14,44 @@ export class CompanyTable1651916869607 implements MigrationInterface {
             generationStrategy: "increment",
           },
           {
+            name: "companyId",
+            type: "int4",
+            isNullable: false,
+          },
+          {
             name: "name",
             type: "varchar",
             isNullable: false,
           },
           {
-            name: "email",
+            name: "description",
             type: "varchar",
             isNullable: false,
           },
           {
-            name: "companyInfo",
+            name: "start_date",
+            type: "timestamp",
+            isNullable: true,
+          },
+          {
+            name: "end_date",
+            type: "timestamp",
+            isNullable: true,
+          },
+          {
+            name: "location",
             type: "varchar",
             isNullable: true,
           },
           {
-            name: "establishDate",
-            type: "date",
-            isNullable: true,
+            name: "createdby_user",
+            type: "int4",
+            isNullable: false,
           },
           {
-            name: "types",
-            type: "jsonb",
+            name: "created_date",
+            type: "timestamp",
+            default: "now()",
             isNullable: false,
           },
         ],
@@ -45,6 +61,6 @@ export class CompanyTable1651916869607 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`DROP TABLE public.company`);
+    queryRunner.query(`DROP TABLE public.course`);
   }
 }

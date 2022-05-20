@@ -13,4 +13,5 @@ export class CreateCourseDto {
   tutors: number[];
   students: number[];
   courseTags: number[];
+  companyId: number;
 }

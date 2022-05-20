@@ -22,6 +22,8 @@ export class Course {
   createdby_user: number;
   @Column()
   created_date: Date;
+  @Column()
+  companyId: number;
   @OneToMany((type) => CourseTutor, (courseUser) => courseUser.course, {
     cascade: ["insert", "update"],
   })

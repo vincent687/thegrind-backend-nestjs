@@ -52,6 +52,8 @@ import { SportsService } from "./non-odoo/sports/sports.service";
 import { CoursesModule } from "./non-odoo/courses/courses.module";
 import { TagsModule } from "./non-odoo/tags/tags.module";
 import { TagsService } from "./non-odoo/tags/tags.service";
+import { FileTypesModule } from "./non-odoo/file-types/file-types.module";
+import { FileTypesService } from "./non-odoo/file-types/file-types.service";
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getOdooTypeOrmConfig()),
@@ -84,6 +86,7 @@ import { TagsService } from "./non-odoo/tags/tags.service";
     SportsModule,
     CoursesModule,
     TagsModule,
+    FileTypesModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
@@ -110,6 +113,7 @@ import { TagsService } from "./non-odoo/tags/tags.service";
     FilesService,
     SportsService,
     TagsService,
+    FileTypesService,
     //ConfigService,
   ],
 })

@@ -28,6 +28,7 @@ import { CourseStudent } from "src/non-odoo/users/entities/course-student.entity
 import { CourseTutor } from "src/non-odoo/users/entities/course-tutor.entity";
 import { Course } from "src/non-odoo/courses/entities/course.entity";
 import { CourseTag } from "src/non-odoo/tags/entities/course-tag.entity";
+import { FileType } from "../non-odoo/file-types/entities/file-type.entity";
 
 require("dotenv").config();
 
@@ -62,6 +63,7 @@ const ENTITIES = [
   CourseTag,
   CourseStudent,
   CourseTutor,
+  FileType,
 ];
 export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}

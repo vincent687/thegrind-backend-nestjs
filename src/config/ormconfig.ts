@@ -11,6 +11,7 @@ import { CourseTutor } from "../non-odoo/users/entities/course-tutor.entity";
 import { CourseStudent } from "../non-odoo/users/entities/course-student.entity";
 import { Course } from "src/non-odoo/courses/entities/course.entity";
 import { CourseTag } from "src/non-odoo/tags/entities/course-tag.entity";
+import { FileType } from "src/non-odoo/file-types/entities/file-type.entity";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ const ENTITIES = [
   CourseTag,
   CourseStudent,
   CourseTutor,
+  FileType,
 ];
 
 dotenv.config();
