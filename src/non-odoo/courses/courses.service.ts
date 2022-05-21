@@ -25,6 +25,15 @@ export class CoursesService {
       course_email: createCourseDto.course_email,
     };
 
+    await this.CoursesRepository.createQueryBuilder()
+      .insert()
+      .into(Course)
+      .values([course])
+      .returning("id")
+      .execute();
+
+    // Logger.log("test:", test);
+
     const newCourse = await this.CoursesRepository.create(course);
 
     const tutorArray =
