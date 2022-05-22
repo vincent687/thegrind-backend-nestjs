@@ -19,6 +19,12 @@ export class FileTable1649850146921 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: "companyId",
+            type: "int4",
+            isPrimary: false,
+            isNullable: false,
+          },
+          {
             name: "userId",
             type: "int4",
             isNullable: false,

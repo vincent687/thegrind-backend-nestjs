@@ -54,6 +54,7 @@ import { TagsModule } from "./non-odoo/tags/tags.module";
 import { TagsService } from "./non-odoo/tags/tags.service";
 import { FileTypesModule } from "./non-odoo/file-types/file-types.module";
 import { FileTypesService } from "./non-odoo/file-types/file-types.service";
+import { JwtModule } from "@nestjs/jwt";
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getOdooTypeOrmConfig()),
@@ -87,6 +88,7 @@ import { FileTypesService } from "./non-odoo/file-types/file-types.service";
     CoursesModule,
     TagsModule,
     FileTypesModule,
+    JwtModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],

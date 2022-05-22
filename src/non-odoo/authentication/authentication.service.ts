@@ -6,14 +6,20 @@ import * as bcrypt from "bcrypt";
 import { hash } from "bcrypt";
 import { ReadUserDto } from "../users/dto/read-user.dto";
 import { RegisterDto } from "./dto/registration.dto";
+import { JwtService } from "@nestjs/jwt";
+
 import {
   PG_UNIQUE_VIOLATION,
   PG_NOT_NULL_VIOLATION,
 } from "@fiveem/postgres-error-codes";
+import { User } from "../users/entities/users.entity";
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private readonly UsersService: UsersService) {}
+  constructor(
+    private readonly UsersService: UsersService,
+    private jwtService: JwtService
+  ) {}
 
   public async register(registrationData: RegisterDto) {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
@@ -50,6 +56,13 @@ export class AuthenticationService {
     } catch (error) {
       throw new HttpException("Password incorrect", HttpStatus.BAD_REQUEST);
     }
+  }
+
+  public async login(user: User) {
+    return {
+      ...user,
+      access_token: this.jwtService.sign(user),
+    };
   }
 
   private async verifyPassword(

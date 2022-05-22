@@ -1,6 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Company } from "src/companys/entities/company.entity";
+
 import { Repository } from "typeorm";
 import { User } from "../users/entities/users.entity";
 import { CreateCompanyDto } from "./dto/create-company.dto";
@@ -16,36 +16,48 @@ export class CompanysService {
     private readonly UsersService: UsersService
   ) {}
 
-  async create(createCompanyDt: CreateCompanyDto) {
+  async create(createCompanyDto: CreateCompanyDto) {
     const company = {
-      name: createCompanyDt.name,
-      email: createCompanyDt.email,
-      companyInfo: createCompanyDt.companyInfo,
-      establishDate: createCompanyDt.establishDate,
-      types: createCompanyDt.types,
+      name: createCompanyDto.name,
+      email: createCompanyDto.email,
+      companyInfo: createCompanyDto.companyInfo,
+      establishDate: createCompanyDto.establishDate,
+      types: createCompanyDto.types,
     };
+
+    await this.CompanysRepository.createQueryBuilder()
+      .insert()
+      .into(CompanyNonOdoo)
+      .values([company])
+      .returning("id")
+      .execute();
+
     const newCompany = await this.CompanysRepository.create(company);
     Logger.log(newCompany.id);
-    const useArray = await createCompanyDt.users.reduce((acc, val) => {
-      return acc.concat({
-        cid: newCompany.id,
-        user_id: val,
-      });
-    }, []);
+    const userArray =
+      createCompanyDto.users != null
+        ? await createCompanyDto.users.reduce((acc, val) => {
+            return acc.concat({
+              cid: newCompany.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
 
     let entity2 = {
       ...newCompany,
-      users: useArray,
+      users: userArray,
     };
     Logger.log(entity2);
     await this.CompanysRepository.save(entity2);
     return newCompany;
   }
 
-  findAll() {
+  findAll(id: number) {
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.users", "companyUser")
       .leftJoinAndSelect("companyUser.user", "user")
+      .where("user.id = :id ", { id })
       .getMany();
   }
 

@@ -43,6 +43,7 @@ export class FilesController {
         filename: { type: "string" },
         userId: { type: "integer" },
         classId: { type: "integer" },
+        companyId: { type: "integer" },
         type: { type: "integer" },
         url: { type: "string" },
         file: {
@@ -69,6 +70,7 @@ export class FilesController {
     var createFileDto: CreateFilesDto = {
       name: file.filename,
       classId: file.classId,
+      companyId: file.companyId,
       type: file.type,
       userId: file.userId,
       url: file.url ?? "",

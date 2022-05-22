@@ -6,8 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+import { JwtAuthGuard } from "../authentication/jwt-auth.guard";
 import { CompanysService } from "./companys.service";
 import { CreateCompanyDto } from "./dto/create-company.dto";
 import { UpdateCompanyDto } from "./dto/update-company.dto";
@@ -17,14 +20,23 @@ import { UpdateCompanyDto } from "./dto/update-company.dto";
 export class CompanysController {
   constructor(private readonly companysService: CompanysService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
+  @ApiBearerAuth("JWT-auth")
+  create(@Req() req: any, @Body() createCompanyDto: CreateCompanyDto) {
+    if (createCompanyDto.users == null) {
+      createCompanyDto.users = [req.user.id];
+    } else {
+      createCompanyDto.users.concat(req.user.id);
+    }
     return this.companysService.create(createCompanyDto);
   }
 
   @Get()
-  findAll() {
-    return this.companysService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth("JWT-auth")
+  findAll(@Req() req: any) {
+    return this.companysService.findAll(req.user.id);
   }
 
   @Get(":id")

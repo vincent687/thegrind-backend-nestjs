@@ -1,6 +1,7 @@
 export class ReadFileDto {
   id: number;
   classId: number;
+  companyId: number;
   userId: number;
   type: number;
   name: string;

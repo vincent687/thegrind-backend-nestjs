@@ -7,6 +7,8 @@ export class File {
   @Column()
   classId: number;
   @Column()
+  companyId: number;
+  @Column()
   userId: number;
   @Column()
   type: number;
