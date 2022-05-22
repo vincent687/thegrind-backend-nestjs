@@ -36,7 +36,7 @@ export class AuthenticationController {
   async login(@Req() request: RequestWithUser) {
     const user = request.user;
     user.password = undefined;
-    return this.authenticationService.login(user);
+    return await this.authenticationService.login(user);
     // user.password = undefined;
     // return user;
   }
