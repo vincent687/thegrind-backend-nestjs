@@ -21,6 +21,8 @@ export class CompanyNonOdoo {
   companyInfo: string;
   @Column()
   establishDate: Date;
+  @Column()
+  createdby_user: number;
   @Column({
     type: "jsonb",
     array: false,

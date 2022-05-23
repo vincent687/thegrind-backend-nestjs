@@ -22,6 +22,7 @@ export class CompanysService {
       email: createCompanyDto.email,
       companyInfo: createCompanyDto.companyInfo,
       establishDate: createCompanyDto.establishDate,
+      createdby_user: createCompanyDto.createdby_user,
       types: createCompanyDto.types,
     };
 

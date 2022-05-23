@@ -34,6 +34,11 @@ export class CompanyTable1652620998440 implements MigrationInterface {
             isNullable: true,
           },
           {
+            name: "createdby_user",
+            type: "int4",
+            isNullable: false,
+          },
+          {
             name: "types",
             type: "jsonb",
             isNullable: false,

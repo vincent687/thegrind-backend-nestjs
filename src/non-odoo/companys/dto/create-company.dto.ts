@@ -5,6 +5,7 @@ export class CreateCompanyDto {
   name: string;
   email: string;
   companyInfo: string;
+  createdby_user: number;
   establishDate: Date;
   types: Array<Sport>;
   users: number[];
