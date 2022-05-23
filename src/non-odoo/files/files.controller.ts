@@ -77,6 +77,7 @@ export class FilesController {
       filePath: filePath ?? "",
       date: new Date(),
     };
+    Logger.log(createFileDto);
     return this.filesService.create(createFileDto);
   }
 
