@@ -81,11 +81,80 @@ export class CoursesService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} course`;
+    return this.CoursesRepository.createQueryBuilder("course")
+      .leftJoinAndSelect("course.tutors", "courseTutor")
+      .leftJoinAndSelect("courseTutor.user", "tutor")
+      .leftJoinAndSelect("course.students", "courseStudent")
+      .leftJoinAndSelect("courseStudent.user", "student")
+      .leftJoinAndSelect("course.courseTags", "courseTag")
+      .leftJoinAndSelect("courseTag.tag", "tag")
+      .where("course.id = :id ", { id })
+      .getOne();
   }
 
-  update(id: number, updateCourseDto: UpdateCourseDto) {
-    return `This action updates a #${id} course`;
+  async update(id: number, updateCourseDto: UpdateCourseDto) {
+    const course = {
+      id: updateCourseDto.id,
+      name: updateCourseDto.name,
+      description: updateCourseDto.description,
+      start_date: updateCourseDto.start_date,
+      end_date: updateCourseDto.end_date,
+      location: updateCourseDto.location,
+      createdby_user: updateCourseDto.createdby_user,
+      created_date: updateCourseDto.created_date,
+      companyId: updateCourseDto.companyId,
+      course_email: updateCourseDto.course_email,
+    };
+
+    // await this.CoursesRepository.createQueryBuilder()
+    //   .insert()
+    //   .into(Course)
+    //   .values([course])
+    //   .returning("id")
+    //   .execute();
+
+    // Logger.log("test:", test);
+
+    // const newCourse = await this.CoursesRepository.create(course);
+
+    const tutorArray =
+      updateCourseDto.tutors != null
+        ? await updateCourseDto.tutors.reduce((acc, val) => {
+            return acc.concat({
+              cid: updateCourseDto.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
+    const studentArray =
+      updateCourseDto.students != null
+        ? await updateCourseDto.students.reduce((acc, val) => {
+            return acc.concat({
+              cid: updateCourseDto.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
+    const tagArray =
+      updateCourseDto.courseTags != null
+        ? await updateCourseDto.courseTags.reduce((acc, val) => {
+            return acc.concat({
+              cid: updateCourseDto.id,
+              tag_id: val,
+            });
+          }, [])
+        : [];
+
+    let entity2 = {
+      ...course,
+      tutors: tutorArray,
+      students: studentArray,
+      courseTags: tagArray,
+    };
+    Logger.log(entity2);
+    await this.CoursesRepository.save(entity2);
+
+    return entity2;
   }
 
   remove(id: number) {
