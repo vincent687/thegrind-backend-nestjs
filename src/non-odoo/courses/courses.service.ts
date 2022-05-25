@@ -80,8 +80,8 @@ export class CoursesService {
     return this.CoursesRepository.find();
   }
 
-  findOne(id: number) {
-    return this.CoursesRepository.createQueryBuilder("course")
+  async findOne(id: number) {
+    let course = await this.CoursesRepository.createQueryBuilder("course")
       .leftJoinAndSelect("course.tutors", "courseTutor")
       .leftJoinAndSelect("courseTutor.user", "tutor")
       .leftJoinAndSelect("course.students", "courseStudent")
@@ -90,6 +90,18 @@ export class CoursesService {
       .leftJoinAndSelect("courseTag.tag", "tag")
       .where("course.id = :id ", { id })
       .getOne();
+
+    return {
+      ...course,
+      courseTags: course.courseTags
+        .map((x) => {
+          if (x.tag != null) {
+            console.log(x.tag);
+            return x.tag.id;
+          }
+        })
+        .filter((u) => u != null),
+    };
   }
 
   async update(id: number, updateCourseDto: UpdateCourseDto) {
