@@ -101,6 +101,11 @@ export class CoursesService {
           }
         })
         .filter((u) => u != null),
+      tutors: course.tutors
+        .map((x) => {
+          return x.user.id;
+        })
+        .filter((u) => u != null),
     };
   }
 
