@@ -9,6 +9,8 @@ export class File {
   @Column()
   companyId: number;
   @Column()
+  lessonId: number;
+  @Column()
   userId: number;
   @Column()
   type: number;

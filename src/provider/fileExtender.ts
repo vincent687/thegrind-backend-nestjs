@@ -14,6 +14,7 @@ export class FileExtender implements NestInterceptor {
     req.file["userId"] = Number(req.body.userId);
     req.file["companyId"] = Number(req.body.companyId);
     req.file["classId"] = Number(req.body.classId);
+    req.file["lessonId"] = Number(req.body.lessonId);
     req.file["type"] = Number(req.body.type);
     req.file["url"] = req.body.url;
     return next.handle();

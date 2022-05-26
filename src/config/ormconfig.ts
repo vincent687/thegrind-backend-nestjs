@@ -12,6 +12,9 @@ import { CourseStudent } from "../non-odoo/users/entities/course-student.entity"
 import { Course } from "src/non-odoo/courses/entities/course.entity";
 import { CourseTag } from "src/non-odoo/tags/entities/course-tag.entity";
 import { FileType } from "src/non-odoo/file-types/entities/file-type.entity";
+import { LessonTutor } from "src/non-odoo/users/entities/lesson-tutor.entity";
+import { LessonStudent } from "src/non-odoo/users/entities/lesson-student";
+import { LessonNonOdoo } from "src/non-odoo/lessons/entities/lesson.entity";
 
 dotenv.config();
 
@@ -27,6 +30,9 @@ const ENTITIES = [
   CourseStudent,
   CourseTutor,
   FileType,
+  LessonNonOdoo,
+  LessonTutor,
+  LessonStudent,
 ];
 
 dotenv.config();

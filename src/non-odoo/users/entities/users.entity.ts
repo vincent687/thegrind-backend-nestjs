@@ -9,6 +9,8 @@ import {
 import { CompanyUserNonOdoo } from "./company-user.entity";
 import { CourseTutor } from "./course-tutor.entity";
 import { CourseStudent } from "./course-student.entity";
+import { LessonStudent } from "./lesson-student";
+import { LessonTutor } from "./lesson-tutor.entity";
 
 @Entity({ name: "user", synchronize: false })
 export class User {
@@ -30,7 +32,13 @@ export class User {
   @OneToMany((type) => CourseTutor, (courseUser) => courseUser.user)
   @JoinColumn()
   courses: CourseTutor[];
+  @OneToMany((type) => LessonTutor, (lessonUser) => lessonUser.user)
+  @JoinColumn()
+  lessons: LessonTutor[];
   @OneToMany((type) => CourseStudent, (courseUser) => courseUser.user)
   @JoinColumn()
   studentCourses: CourseStudent[];
+  @OneToMany((type) => LessonStudent, (lessonUser) => lessonUser.user)
+  @JoinColumn()
+  lstudentLessons: LessonStudent[];
 }

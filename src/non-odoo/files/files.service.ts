@@ -64,6 +64,51 @@ export class FilesService {
     return result;
   }
 
+  async findAllLessonMaterial(lessonId: number) {
+    const files = await this.FilesRepository.find({
+      where: {
+        lessonId: lessonId,
+      },
+    });
+
+    const result: ReadFileDto[] = files.map((key, index) => {
+      let thumbnail = "";
+      if (key.filePath) {
+        if (key.filePath.includes("https://storage.cloud.google.com")) {
+          key.filePath = key.filePath.replace(
+            "https://storage.cloud.google.com",
+            "https://storage.googleapis.com/thegrind_videostorage"
+          );
+        }
+      }
+      if (key.url) {
+        if (key.url.includes("youtu.be")) {
+          const segemnts = key.url.split("/");
+          const last = segemnts.pop() || segemnts.pop();
+          thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+        }
+        if (key.url.includes("youtube")) {
+          const segments = key.url.split("?");
+          const query = segments[1];
+          const params = new URLSearchParams(query);
+          if (params.has("v")) {
+            thumbnail = `https://img.youtube.com/vi/${params.get("v")}/0.jpg`;
+          }
+          // thumbnail = `https://img.youtube.com/vi/${last}/0.jpg`;
+        }
+      }
+      const obj: ReadFileDto = {
+        ...key,
+        thumbnail: thumbnail,
+      };
+      return obj;
+    });
+
+    //const result: ReadFileDto = { ...user };
+
+    return result;
+  }
+
   findOne(id: number) {
     return this.FilesRepository.findOne({
       where: {
