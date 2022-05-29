@@ -70,8 +70,46 @@ export class CompanysService {
       .getOne();
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    const company = {
+      id: updateCompanyDto.id,
+      name: updateCompanyDto.name,
+      email: updateCompanyDto.email,
+      companyInfo: updateCompanyDto.companyInfo,
+      establishDate: updateCompanyDto.establishDate,
+      createdby_user: updateCompanyDto.createdby_user,
+      types: updateCompanyDto.types,
+    };
+
+    // await this.CoursesRepository.createQueryBuilder()
+    //   .insert()
+    //   .into(Course)
+    //   .values([course])
+    //   .returning("id")
+    //   .execute();
+
+    // Logger.log("test:", test);
+
+    // const newCourse = await this.CoursesRepository.create(course);
+
+    const userArray =
+      updateCompanyDto.users != null
+        ? await updateCompanyDto.users.reduce((acc, val) => {
+            return acc.concat({
+              cid: company.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
+
+    let entity2 = {
+      ...company,
+      users: userArray,
+    };
+    Logger.log(entity2);
+    await this.CompanysRepository.save(entity2);
+
+    return entity2;
   }
 
   remove(id: number) {

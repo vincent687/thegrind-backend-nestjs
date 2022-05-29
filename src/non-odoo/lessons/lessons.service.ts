@@ -91,8 +91,57 @@ export class LessonsService {
       .getOne();
   }
 
-  update(id: number, updateLessonDto: UpdateLessonDto) {
-    return `This action updates a #${id} lesson`;
+  async update(id: number, updateLessonDto: UpdateLessonDto) {
+    const lesson = {
+      id: updateLessonDto.id,
+      name: updateLessonDto.name,
+      description: updateLessonDto.description,
+      start_date: updateLessonDto.start_date,
+      end_date: updateLessonDto.end_date,
+      location: updateLessonDto.location,
+      createdby_user: updateLessonDto.createdby_user,
+      company_id: updateLessonDto.company_id,
+    };
+
+    // await this.CoursesRepository.createQueryBuilder()
+    //   .insert()
+    //   .into(Course)
+    //   .values([course])
+    //   .returning("id")
+    //   .execute();
+
+    // Logger.log("test:", test);
+
+    // const newCourse = await this.CoursesRepository.create(course);
+
+    const tutorArray =
+      updateLessonDto.tutors != null
+        ? await updateLessonDto.tutors.reduce((acc, val) => {
+            return acc.concat({
+              cid: updateLessonDto.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
+    const studentArray =
+      updateLessonDto.students != null
+        ? await updateLessonDto.students.reduce((acc, val) => {
+            return acc.concat({
+              cid: updateLessonDto.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
+
+    let entity2 = {
+      ...lesson,
+      tutors: tutorArray,
+      students: studentArray,
+    };
+    Logger.log(entity2);
+    await this.LessonsRepository.save(entity2);
+
+    return entity2;
   }
 
   remove(id: number) {

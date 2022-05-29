@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
 
-@Entity({ name: "file_type", synchronize: false })
+@Entity({ name: "public.file_type", synchronize: false })
 export class FileType {
   @PrimaryGeneratedColumn()
   id: number;

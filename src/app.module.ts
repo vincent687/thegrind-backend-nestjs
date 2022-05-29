@@ -56,6 +56,7 @@ import { FileTypesModule } from "./non-odoo/file-types/file-types.module";
 import { FileTypesService } from "./non-odoo/file-types/file-types.service";
 import { JwtModule } from "@nestjs/jwt";
 import { LessonsNonOdooModule } from "./non-odoo/lessons/lessons.module";
+import { VideoCommentsModule } from "./non-odoo/video-comments/video-comments.module";
 
 @Module({
   imports: [
@@ -92,6 +93,7 @@ import { LessonsNonOdooModule } from "./non-odoo/lessons/lessons.module";
     FileTypesModule,
     JwtModule,
     LessonsNonOdooModule,
+    VideoCommentsModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
