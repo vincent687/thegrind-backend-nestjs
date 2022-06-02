@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from "@nestjs/common";
 import { LessonsService } from "./lessons.service";
 import { CreateLessonDto } from "./dto/create-lesson.dto";
@@ -34,8 +35,8 @@ export class LessonsController {
   }
 
   @Get(":id")
-  async findOne(@Param("id") id: string) {
-    var lesson = await this.lessonsService.findOne(+id);
+  async findOne(@Param("id") id: string, @Query("courseId") courseId: string) {
+    var lesson = await this.lessonsService.findOne(+id, +courseId);
     var materials = await this.filesService.findAllLessonMaterial(lesson.id);
     const result: ReadLessonDto = { ...lesson, videos: materials };
     return result;
