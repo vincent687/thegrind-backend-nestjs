@@ -28,7 +28,6 @@ export class UsersService {
   }
 
   findAll() {
-    var test = "";
     return this.UsersRepository.find();
   }
 
