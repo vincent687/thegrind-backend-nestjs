@@ -15,10 +15,16 @@ export class CourseTag {
   cid: number;
   @PrimaryColumn()
   tag_id: number;
-  @ManyToOne((type) => Course)
+  @ManyToOne((type) => Course, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "cid", referencedColumnName: "id" })
   course: Course;
-  @ManyToOne((type) => Tag)
+  @ManyToOne((type) => Tag, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "tag_id", referencedColumnName: "id" })
   tag: Tag;
 }

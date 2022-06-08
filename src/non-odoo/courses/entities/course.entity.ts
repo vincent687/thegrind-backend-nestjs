@@ -27,15 +27,15 @@ export class Course {
   @Column()
   companyId: number;
   @OneToMany((type) => CourseTutor, (courseUser) => courseUser.course, {
-    cascade: ["insert", "update"],
+    cascade: ["insert", "update", "remove"],
   })
   tutors: CourseTutor[];
   @OneToMany((type) => CourseStudent, (courseUser) => courseUser.course, {
-    cascade: ["insert", "update"],
+    cascade: ["insert", "update", "remove"],
   })
   students: CourseStudent[];
   @OneToMany((type) => CourseTag, (courseTag) => courseTag.course, {
-    cascade: ["insert", "update"],
+    cascade: ["insert", "update", "remove"],
   })
   courseTags: CourseTag[];
 }
