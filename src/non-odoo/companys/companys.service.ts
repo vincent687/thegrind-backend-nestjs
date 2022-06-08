@@ -66,9 +66,9 @@ export class CompanysService {
   findAll(id: number) {
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.users", "companyUser")
-      .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("companyUser.user", "tutor")
       .leftJoinAndSelect("company.students", "companyStudent")
-      .leftJoinAndSelect("companyUser.user", "user2")
+      .leftJoinAndSelect("companyStudent.user", "student")
       .where("user.id = :id ", { id })
       .getMany();
   }
@@ -76,9 +76,9 @@ export class CompanysService {
   async findOne(id: number) {
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.users", "companyUser")
-      .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("companyUser.user", "tutor")
       .leftJoinAndSelect("company.students", "companyStudent")
-      .leftJoinAndSelect("companyUser.user", "user2")
+      .leftJoinAndSelect("companyStudent.user", "student")
       .where("company.id = :id ", { id })
       .getOne();
   }
