@@ -87,7 +87,7 @@ export class StudentAttendancesNonOdooService {
     );
 
     var newStudents = students.filter((x) => !oStudents.includes(x));
-    Logger.log(newStudents);
+    Logger.log("new", newStudents);
     var dropIds = dropStudents.map((x) => x.id);
     Logger.log(dropIds);
     const entities = await this.StudentAttendancesRepository.findByIds(dropIds);

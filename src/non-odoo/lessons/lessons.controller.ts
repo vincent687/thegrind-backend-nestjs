@@ -30,8 +30,13 @@ export class LessonsController {
   ) {}
 
   @Post()
-  create(@Body() createLessonDto: CreateLessonDto) {
-    return this.lessonsService.create(createLessonDto);
+  async create(@Body() createLessonDto: CreateLessonDto) {
+    var course = await this.courseService.findOne(createLessonDto.course_id);
+    var students = course.students.map((u) => u.user_id);
+    createLessonDto.students = students;
+    var result = await this.lessonsService.create(createLessonDto);
+    await this.attendanceService.updateByStudentTable(result.id, students);
+    return result;
   }
 
   @Get()
