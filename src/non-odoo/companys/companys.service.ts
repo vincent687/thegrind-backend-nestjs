@@ -69,7 +69,7 @@ export class CompanysService {
       .leftJoinAndSelect("companyUser.user", "tutor")
       .leftJoinAndSelect("company.students", "companyStudent")
       .leftJoinAndSelect("companyStudent.user", "student")
-      .where("user.id = :id ", { id })
+      .where("tutor.id = :id ", { id })
       .getMany();
   }
 

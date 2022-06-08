@@ -34,7 +34,6 @@ export class CompanyNonOdoo {
   @OneToMany(
     (type) => CompanyUserNonOdoo,
     (companyUser) => companyUser.company,
-
     { cascade: ["insert", "update", "remove"] }
   )
   users: CompanyUserNonOdoo[];
