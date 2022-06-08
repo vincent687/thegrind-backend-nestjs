@@ -25,11 +25,11 @@ export class LessonNonOdoo {
   @Column({ type: "timestamp" })
   end_date: Date;
   @OneToMany((type) => LessonTutor, (lessonUser) => lessonUser.lesson, {
-    cascade: ["insert", "update"],
+    cascade: ["insert", "update", "remove"],
   })
   tutors: LessonTutor[];
   @OneToMany((type) => LessonStudent, (lessonUser) => lessonUser.lesson, {
-    cascade: ["insert", "update"],
+    cascade: ["insert", "update", "remove"],
   })
   students: LessonStudent[];
   @Column()

@@ -15,10 +15,16 @@ export class LessonStudent {
   lid: number;
   @PrimaryColumn()
   user_id: number;
-  @ManyToOne((type) => LessonNonOdoo)
+  @ManyToOne((type) => LessonNonOdoo, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "lid", referencedColumnName: "id" })
   lesson: LessonNonOdoo;
-  @ManyToOne((type) => User)
+  @ManyToOne((type) => User, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "user_id", referencedColumnName: "id" })
   user: User;
 }

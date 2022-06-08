@@ -91,6 +91,7 @@ export class CoursesService {
       .where("course.id = :id ", { id })
       .getOne();
 
+    Logger.log(course);
     return {
       ...course,
       courseTags: course.courseTags

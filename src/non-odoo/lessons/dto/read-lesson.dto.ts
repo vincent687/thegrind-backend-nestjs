@@ -4,6 +4,7 @@ import { Video } from "src/videos/entities/video.entity";
 import { LessonTutor } from "../../users/entities/lesson-tutor.entity";
 import { LessonStudent } from "../../users/entities/lesson-student";
 import { ReadFileDto } from "src/non-odoo/files/dto/read-files.dto";
+import { ReadStudent } from "src/non-odoo/users/dto/read-student.dto";
 
 export class ReadLessonDto {
   id: number;
@@ -13,10 +14,11 @@ export class ReadLessonDto {
   start_date: Date;
   end_date: Date;
   tutors: LessonTutor[];
-  students: LessonStudent[];
+  students: ReadStudent[];
   location: string;
   description: string;
   course_id: number;
+  course_name: string;
   company_id: number;
   videos: ReadFileDto[];
 }

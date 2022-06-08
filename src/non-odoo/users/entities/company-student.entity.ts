@@ -9,8 +9,8 @@ import {
 import { CompanyNonOdoo } from "../../companys/entities/company.entity";
 import { User } from "./users.entity";
 
-@Entity({ name: "company_users_rel", synchronize: false })
-export class CompanyUserNonOdoo {
+@Entity({ name: "company_students_rel", synchronize: false })
+export class CompanyStudentNonOdoo {
   @PrimaryColumn()
   cid: number;
   @PrimaryColumn()

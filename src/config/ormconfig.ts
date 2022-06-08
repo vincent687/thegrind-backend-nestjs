@@ -15,6 +15,9 @@ import { FileType } from "src/non-odoo/file-types/entities/file-type.entity";
 import { LessonTutor } from "src/non-odoo/users/entities/lesson-tutor.entity";
 import { LessonStudent } from "src/non-odoo/users/entities/lesson-student";
 import { LessonNonOdoo } from "src/non-odoo/lessons/entities/lesson.entity";
+import { VideoComment } from "src/non-odoo/video-comments/entities/video-comment.entity";
+import { CompanyStudentNonOdoo } from "../non-odoo/users/entities/company-student.entity";
+import { StudentAttendanceNonOdoo } from "src/non-odoo/student-attendances/entities/student-attendance.entity";
 
 dotenv.config();
 
@@ -24,6 +27,7 @@ const ENTITIES = [
   Sport,
   CompanyNonOdoo,
   CompanyUserNonOdoo,
+  CompanyStudentNonOdoo,
   Tag,
   Course,
   CourseTag,
@@ -33,6 +37,8 @@ const ENTITIES = [
   LessonNonOdoo,
   LessonTutor,
   LessonStudent,
+  VideoComment,
+  StudentAttendanceNonOdoo
 ];
 
 dotenv.config();

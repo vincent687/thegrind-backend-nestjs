@@ -44,10 +44,19 @@ export class CompanysService {
             });
           }, [])
         : [];
-
+    const studentArray =
+      createCompanyDto.students != null
+        ? await createCompanyDto.students.reduce((acc, val) => {
+            return acc.concat({
+              cid: newCompany.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
     let entity2 = {
       ...newCompany,
       users: userArray,
+      students: studentArray,
     };
     Logger.log(entity2);
     await this.CompanysRepository.save(entity2);
@@ -58,6 +67,8 @@ export class CompanysService {
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.users", "companyUser")
       .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("company.students", "companyStudent")
+      .leftJoinAndSelect("companyUser.user", "user2")
       .where("user.id = :id ", { id })
       .getMany();
   }
@@ -66,6 +77,8 @@ export class CompanysService {
     return this.CompanysRepository.createQueryBuilder("company")
       .leftJoinAndSelect("company.users", "companyUser")
       .leftJoinAndSelect("companyUser.user", "user")
+      .leftJoinAndSelect("company.students", "companyStudent")
+      .leftJoinAndSelect("companyUser.user", "user2")
       .where("company.id = :id ", { id })
       .getOne();
   }
@@ -81,16 +94,17 @@ export class CompanysService {
       types: updateCompanyDto.types,
     };
 
-    // await this.CoursesRepository.createQueryBuilder()
-    //   .insert()
-    //   .into(Course)
-    //   .values([course])
-    //   .returning("id")
-    //   .execute();
-
-    // Logger.log("test:", test);
-
-    // const newCourse = await this.CoursesRepository.create(course);
+    // var originalStudents =
+    //   await this.CompanysRepository.createQueryBuilder(
+    //     "company"
+    //   )
+    //     .where("company.id = :id ", { lessonId })
+    //     .getMany();
+    // var oStudents = originalStudents.map((x) => x.user_id);
+    // Logger.log(oStudents);
+    // var dropStudents = originalStudents.filter(
+    //   (x) => !students.includes(x.user_id)
+    // );
 
     const userArray =
       updateCompanyDto.users != null
@@ -101,10 +115,20 @@ export class CompanysService {
             });
           }, [])
         : [];
+    const studentArray =
+      updateCompanyDto.students != null
+        ? await updateCompanyDto.students.reduce((acc, val) => {
+            return acc.concat({
+              cid: company.id,
+              user_id: val,
+            });
+          }, [])
+        : [];
 
     let entity2 = {
       ...company,
       users: userArray,
+      students: studentArray,
     };
     Logger.log(entity2);
     await this.CompanysRepository.save(entity2);

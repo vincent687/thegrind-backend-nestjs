@@ -1,4 +1,5 @@
 import { Sport } from "src/non-odoo/sports/entities/sport.entity";
+import { CompanyStudentNonOdoo } from "src/non-odoo/users/entities/company-student.entity";
 import {
   Entity,
   Column,
@@ -33,7 +34,14 @@ export class CompanyNonOdoo {
   @OneToMany(
     (type) => CompanyUserNonOdoo,
     (companyUser) => companyUser.company,
-    { cascade: ["insert", "update"] }
+
+    { cascade: ["insert", "update", "remove"] }
   )
   users: CompanyUserNonOdoo[];
+  @OneToMany(
+    (type) => CompanyStudentNonOdoo,
+    (companyStudent) => companyStudent.company,
+    { cascade: ["insert", "update", "remove"] }
+  )
+  students: CompanyStudentNonOdoo[];
 }

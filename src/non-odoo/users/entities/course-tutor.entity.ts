@@ -16,10 +16,16 @@ export class CourseTutor {
   cid: number;
   @PrimaryColumn()
   user_id: number;
-  @ManyToOne((type) => Course)
+  @ManyToOne((type) => Course, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "cid", referencedColumnName: "id" })
   course: Course;
-  @ManyToOne((type) => User)
+  @ManyToOne((type) => User, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   @JoinColumn({ name: "user_id", referencedColumnName: "id" })
   user: User;
 }

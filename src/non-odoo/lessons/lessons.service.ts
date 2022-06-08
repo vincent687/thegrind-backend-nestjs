@@ -121,7 +121,7 @@ export class LessonsService {
       updateLessonDto.tutors != null
         ? await updateLessonDto.tutors.reduce((acc, val) => {
             return acc.concat({
-              cid: updateLessonDto.id,
+              lid: updateLessonDto.id,
               user_id: val,
             });
           }, [])
@@ -130,7 +130,7 @@ export class LessonsService {
       updateLessonDto.students != null
         ? await updateLessonDto.students.reduce((acc, val) => {
             return acc.concat({
-              cid: updateLessonDto.id,
+              lid: updateLessonDto.id,
               user_id: val,
             });
           }, [])

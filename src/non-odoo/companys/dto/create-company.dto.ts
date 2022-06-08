@@ -10,4 +10,5 @@ export class CreateCompanyDto {
   establishDate: Date;
   types: Array<Sport>;
   users: number[];
+  students: number[];
 }
