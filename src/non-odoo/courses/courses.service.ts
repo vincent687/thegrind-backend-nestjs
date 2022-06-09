@@ -80,6 +80,18 @@ export class CoursesService {
     return this.CoursesRepository.find();
   }
 
+  findAllByCompanyId(id: number): Promise<Course[]> {
+    return this.CoursesRepository.createQueryBuilder("course")
+      .leftJoinAndSelect("course.tutors", "courseTutor")
+      .leftJoinAndSelect("courseTutor.user", "tutor")
+      .leftJoinAndSelect("course.students", "courseStudent")
+      .leftJoinAndSelect("courseStudent.user", "student")
+      .leftJoinAndSelect("course.courseTags", "courseTag")
+      .leftJoinAndSelect("courseTag.tag", "tag")
+      .where("course.companyId = :id", { id })
+      .getMany();
+  }
+
   async findOne(id: number) {
     let course = await this.CoursesRepository.createQueryBuilder("course")
       .leftJoinAndSelect("course.tutors", "courseTutor")

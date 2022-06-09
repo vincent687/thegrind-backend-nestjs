@@ -34,6 +34,11 @@ export class CoursesController {
     return this.coursesService.findAll();
   }
 
+  @Get("/company/:id")
+  async findAllByCompanyId(@Param("id") id: string) {
+    return this.coursesService.findAllByCompanyId(+id);
+  }
+
   @Get(":id")
   findOne(@Param("id") id: string) {
     return this.coursesService.findOne(+id);
