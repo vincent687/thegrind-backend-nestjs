@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { LessonsService } from "./lessons.service";
 import { LessonsController } from "./lessons.controller";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -12,7 +12,7 @@ import { CoursesModule } from "../courses/courses.module";
     TypeOrmModule.forFeature([LessonNonOdoo], "nonodoo"),
     FilesModule,
     StudentAttendancesNonOdooModule,
-    CoursesModule,
+    forwardRef(() => CoursesModule),
   ],
   controllers: [LessonsController],
   providers: [LessonsService],
