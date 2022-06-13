@@ -83,7 +83,6 @@ export class LessonsController {
   @Get("/company/:id")
   async findAllByCompanyId(@Param("id") id: string) {
     var lessons = await this.lessonsService.findAllByCompanyId(+id);
-    Logger.log("lesson", lessons);
     var lessonsDto = lessons.map(async (u) => {
       var course = await this.courseService.findOneWithoutTag(u.course_id);
       var countAbscense = 0;
@@ -128,7 +127,41 @@ export class LessonsController {
 
   @Get("/class/:id")
   async findAllByClassId(@Param("id") id: string) {
-    return this.lessonsService.findAllByCourseId(+id);
+    var lessons = await this.lessonsService.findAllByCourseId(+id);
+    var lessonsDto = lessons.map(async (u) => {
+      var course = await this.courseService.findOneWithoutTag(u.course_id);
+      var countAbscense = 0;
+
+      var studentsPromise = u.students.map(async (x) => {
+        var attendance = await this.attendanceService.getStudentClassByLessonId(
+          u.id,
+          x.user_id
+        );
+
+        if (attendance.status != "attend") {
+          countAbscense++;
+        }
+        return {
+          ...x,
+          attendance,
+        };
+      });
+      var students = await Promise.all(studentsPromise);
+      const test = students.length - countAbscense;
+
+      const attendRate =
+        ((students.length - countAbscense) / students.length) * 100;
+      const result: ReadLessonDto = {
+        ...u,
+        course_name: course.name,
+        videos: [],
+        students: students,
+        attendRate: attendRate,
+      };
+      return result;
+    });
+    var result = await Promise.all(lessonsDto);
+    return result;
   }
 
   @Patch(":id")
