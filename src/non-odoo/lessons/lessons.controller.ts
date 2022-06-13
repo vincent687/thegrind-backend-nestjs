@@ -50,16 +50,23 @@ export class LessonsController {
     var materials = await this.filesService.findAllLessonMaterial(lesson.id);
     var course = await this.courseService.findOne(lesson.course_id);
     var countAbscense = 0;
-    var students = lesson.students.map(async (u) => {
+    var studentsPromise = lesson.students.map(async (u) => {
       var attendance = await this.attendanceService.getStudentClassByLessonId(
         lesson.id,
         u.user_id
       );
+      if (attendance.status != "attend") {
+        countAbscense++;
+      }
+
       return {
         ...u,
         attendance,
       };
     });
+
+    var students = await Promise.all(studentsPromise);
+
     const attendRate =
       ((students.length - countAbscense) / students.length) * 100;
 
@@ -67,7 +74,7 @@ export class LessonsController {
       ...lesson,
       course_name: course.name,
       videos: materials,
-      students: await Promise.all(students),
+      students: students,
       attendRate: attendRate,
     };
     return result;
@@ -81,7 +88,7 @@ export class LessonsController {
       var course = await this.courseService.findOneWithoutTag(u.course_id);
       var countAbscense = 0;
 
-      var students = u.students.map(async (x) => {
+      var studentsPromise = u.students.map(async (x) => {
         var attendance = await this.attendanceService.getStudentClassByLessonId(
           u.id,
           x.user_id
@@ -95,6 +102,8 @@ export class LessonsController {
           attendance,
         };
       });
+      var students = await Promise.all(studentsPromise);
+      const test = students.length - countAbscense;
 
       const attendRate =
         ((students.length - countAbscense) / students.length) * 100;
@@ -102,7 +111,7 @@ export class LessonsController {
         ...u,
         course_name: course.name,
         videos: [],
-        students: await Promise.all(students),
+        students: students,
         attendRate: attendRate,
       };
       return result;
