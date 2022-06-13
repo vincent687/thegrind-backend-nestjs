@@ -74,21 +74,31 @@ export class LessonsController {
     Logger.log("lesson", lessons);
     var lessonsDto = lessons.map(async (u) => {
       var course = await this.courseService.findOneWithoutTag(u.course_id);
+      var countAbscense = 0;
+
       var students = u.students.map(async (x) => {
         var attendance = await this.attendanceService.getStudentClassByLessonId(
           u.id,
           x.user_id
         );
+
+        if (attendance.status != "attend") {
+          countAbscense++;
+        }
         return {
           ...x,
           attendance,
         };
       });
+
+      const attendRate =
+        ((students.length - countAbscense) / students.length) * 100;
       const result: ReadLessonDto = {
         ...u,
         course_name: course.name,
         videos: [],
         students: await Promise.all(students),
+        attendRate: attendRate,
       };
       return result;
     });
@@ -98,6 +108,7 @@ export class LessonsController {
       r[a.course_name].push(a);
       return r;
     }, Object.create(null));
+
     return result;
   }
 

@@ -5,6 +5,7 @@ import { LessonTutor } from "../../users/entities/lesson-tutor.entity";
 import { LessonStudent } from "../../users/entities/lesson-student";
 import { ReadFileDto } from "src/non-odoo/files/dto/read-files.dto";
 import { ReadStudent } from "src/non-odoo/users/dto/read-student.dto";
+import { Double } from "typeorm";
 
 export class ReadLessonDto {
   id: number;
@@ -21,4 +22,5 @@ export class ReadLessonDto {
   course_name: string;
   company_id: number;
   videos: ReadFileDto[];
+  attendRate: Double;
 }
