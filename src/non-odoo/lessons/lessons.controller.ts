@@ -49,6 +49,7 @@ export class LessonsController {
     var lesson = await this.lessonsService.findOne(+id, +courseId);
     var materials = await this.filesService.findAllLessonMaterial(lesson.id);
     var course = await this.courseService.findOne(lesson.course_id);
+    var countAbscense = 0;
     var students = lesson.students.map(async (u) => {
       var attendance = await this.attendanceService.getStudentClassByLessonId(
         lesson.id,
@@ -59,11 +60,15 @@ export class LessonsController {
         attendance,
       };
     });
+    const attendRate =
+      ((students.length - countAbscense) / students.length) * 100;
+
     const result: ReadLessonDto = {
       ...lesson,
       course_name: course.name,
       videos: materials,
       students: await Promise.all(students),
+      attendRate: attendRate,
     };
     return result;
   }
