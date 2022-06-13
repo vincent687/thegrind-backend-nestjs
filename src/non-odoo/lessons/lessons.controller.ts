@@ -68,6 +68,39 @@ export class LessonsController {
     return result;
   }
 
+  @Get("/company/:id")
+  async findAllByCompanyId(@Param("id") id: string) {
+    var lessons = await this.lessonsService.findAllByCompanyId(+id);
+    Logger.log("lesson", lessons);
+    var lessonsDto = lessons.map(async (u) => {
+      var course = await this.courseService.findOneWithoutTag(u.course_id);
+      var students = u.students.map(async (x) => {
+        var attendance = await this.attendanceService.getStudentClassByLessonId(
+          u.id,
+          x.user_id
+        );
+        return {
+          ...x,
+          attendance,
+        };
+      });
+      const result: ReadLessonDto = {
+        ...u,
+        course_name: course.name,
+        videos: [],
+        students: await Promise.all(students),
+      };
+      return result;
+    });
+    var result1 = await Promise.all(lessonsDto);
+    var result = result1.reduce(function (r, a) {
+      r[a.course_name] = r[a.course_name] || [];
+      r[a.course_name].push(a);
+      return r;
+    }, Object.create(null));
+    return result;
+  }
+
   @Get("/class/:id")
   async findAllByClassId(@Param("id") id: string) {
     return this.lessonsService.findAllByCourseId(+id);

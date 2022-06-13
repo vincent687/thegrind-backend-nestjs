@@ -92,6 +92,16 @@ export class CoursesService {
       .getMany();
   }
 
+  async findOneWithoutTag(id: number) {
+    let course = await this.CoursesRepository.createQueryBuilder("course")
+      .where("course.id = :id ", { id })
+      .getOne();
+
+    return {
+      ...course,
+    };
+  }
+
   async findOne(id: number) {
     let course = await this.CoursesRepository.createQueryBuilder("course")
       .leftJoinAndSelect("course.tutors", "courseTutor")
