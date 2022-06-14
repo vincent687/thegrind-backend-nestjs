@@ -40,6 +40,14 @@ export class StudentAttendancesController {
     return this.studentAttendancesNonOdooService.findOne(+id);
   }
 
+  @Get("/course/:id/student/:sid")
+  findAllByCourseId(@Param("id") id: string, @Param("sid") sid: string) {
+    return this.studentAttendancesNonOdooService.getStudentClassByCourseId(
+      +id,
+      +sid
+    );
+  }
+
   @Patch(":id")
   update(
     @Param("id") id: string,

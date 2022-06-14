@@ -50,6 +50,18 @@ export class StudentAttendancesNonOdooService {
       .getOne();
   }
 
+  getStudentClassByCourseId(courseId: number, studentId: number) {
+    return this.StudentAttendancesRepository.createQueryBuilder(
+      "studentAttendance"
+    )
+      .leftJoinAndSelect("studentAttendance.lesson", "lesson")
+      .where(
+        "lesson.course_id = :courseId and studentAttendance.user_id = :studentId",
+        { courseId, studentId }
+      )
+      .getMany();
+  }
+
   getStudentClass(partnerId: number) {
     return this.StudentAttendancesRepository.createQueryBuilder(
       "studentAttendance"
@@ -68,7 +80,6 @@ export class StudentAttendancesNonOdooService {
     return this.StudentAttendancesRepository.createQueryBuilder(
       "studentAttendance"
     )
-      .leftJoinAndSelect("studentAttendance.tutor", "tutor")
       .where("studentAttendance.id = :id", { id })
       .getOne();
   }
