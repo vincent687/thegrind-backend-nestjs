@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Logger,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CoursesService } from "./courses.service";
@@ -24,6 +25,16 @@ export class CoursesController {
     private readonly attendanceService: StudentAttendancesNonOdooService
   ) {}
 
+  isToday(date) {
+    const today = new Date();
+    // 👇️ Today's date
+    console.log(today);
+    if (today.toDateString() === date.toDateString()) {
+      return true;
+    }
+    return false;
+  }
+
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.create(createCourseDto);
@@ -36,7 +47,20 @@ export class CoursesController {
 
   @Get("/company/:id")
   async findAllByCompanyId(@Param("id") id: string) {
-    return this.coursesService.findAllByCompanyId(+id);
+    var courses = await this.coursesService.findAllByCompanyId(+id);
+    var coursesDto = await courses.map(async (x) => {
+      Logger.log("x", x);
+      var todayLessons = await this.lessonsService.findAllByCourseId(x.id);
+      Logger.log("totdaynofilter", todayLessons);
+      todayLessons = todayLessons.filter((o) => this.isToday(o.start_date));
+      Logger.log("totday", todayLessons);
+      return {
+        ...x,
+        todayLessons: todayLessons ?? [],
+      };
+    });
+    var results = await Promise.all(coursesDto);
+    return results;
   }
 
   @Get(":id")
