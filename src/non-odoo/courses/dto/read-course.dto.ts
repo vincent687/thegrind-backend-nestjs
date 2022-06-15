@@ -20,4 +20,5 @@ export class ReadCourseDto {
   courseTags: CourseTag[];
   todayLesson: LessonNonOdoo[];
   tutorProfiles: string[];
+  profile: File;
 }

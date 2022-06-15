@@ -76,8 +76,14 @@ export class CoursesController {
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.coursesService.findOne(+id);
+  async findOne(@Param("id") id: string) {
+    var course = await this.coursesService.findOne(+id);
+    var file = await this.filesService.findCourseProfile(+id);
+
+    return {
+      ...course,
+      profile: file,
+    };
   }
 
   @Patch(":id")
