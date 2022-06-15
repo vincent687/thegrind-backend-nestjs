@@ -117,6 +117,15 @@ export class FilesService {
     });
   }
 
+  findUserProfile(id: number) {
+    return this.FilesRepository.findOne({
+      where: {
+        userId: id,
+        type: 4,
+      },
+    });
+  }
+
   update(id: number, updateFileDto: UpdateFileDto) {
     return `This action updates a #${id} file`;
   }

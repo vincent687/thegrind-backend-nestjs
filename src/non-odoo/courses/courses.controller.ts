@@ -15,6 +15,7 @@ import { UpdateCourseDto } from "./dto/update-course.dto";
 import { StudentAttendancesNonOdooService } from "../student-attendances/student-attendances.service";
 import { LessonsNonOdooModule } from "../lessons/lessons.module";
 import { LessonsService } from "../lessons/lessons.service";
+import { FilesService } from "../files/files.service";
 
 @ApiTags("Non Odoo Users")
 @Controller("courses")
@@ -22,7 +23,8 @@ export class CoursesController {
   constructor(
     private readonly coursesService: CoursesService,
     private readonly lessonsService: LessonsService,
-    private readonly attendanceService: StudentAttendancesNonOdooService
+    private readonly attendanceService: StudentAttendancesNonOdooService,
+    private readonly filesService: FilesService
   ) {}
 
   isToday(date) {
@@ -49,14 +51,24 @@ export class CoursesController {
   async findAllByCompanyId(@Param("id") id: string) {
     var courses = await this.coursesService.findAllByCompanyId(+id);
     var coursesDto = await courses.map(async (x) => {
-      Logger.log("x", x);
       var todayLessons = await this.lessonsService.findAllByCourseId(x.id);
-      Logger.log("totdaynofilter", todayLessons);
       todayLessons = todayLessons.filter((o) => this.isToday(o.start_date));
-      Logger.log("totday", todayLessons);
+
+      var tutorsProfiles = [];
+      var tutors = await x.tutors.map(async (p) => {
+        var file = await this.filesService.findUserProfile(p.user_id);
+
+        if (tutorsProfiles.length < 4 && file != null) {
+          tutorsProfiles.push(file.filePath);
+        }
+        return { ...p, profile: file };
+      });
+
       return {
         ...x,
+        tutors: await Promise.all(tutors),
         todayLessons: todayLessons ?? [],
+        tutorsProfiles: tutorsProfiles,
       };
     });
     var results = await Promise.all(coursesDto);

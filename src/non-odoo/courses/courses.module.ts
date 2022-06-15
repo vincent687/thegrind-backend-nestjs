@@ -5,11 +5,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Course } from "./entities/course.entity";
 import { StudentAttendancesNonOdooModule } from "../student-attendances/student-attendances.module";
 import { LessonsNonOdooModule } from "../lessons/lessons.module";
+import { FilesModule } from "../files/files.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Course], "nonodoo"),
     StudentAttendancesNonOdooModule,
+    FilesModule,
     forwardRef(() => LessonsNonOdooModule),
   ],
   controllers: [CoursesController],
