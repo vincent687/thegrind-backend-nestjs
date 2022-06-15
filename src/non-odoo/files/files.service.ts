@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateFilesDto } from "./dto/create-files.dto";
@@ -124,14 +124,18 @@ export class FilesService {
         type: 4,
       },
     });
-    if (file.filePath) {
-      if (file.filePath.includes("https://storage.cloud.google.com")) {
-        file.filePath = file.filePath.replace(
-          "https://storage.cloud.google.com",
-          "https://storage.googleapis.com/thegrind_videostorage"
-        );
+
+    if (file) {
+      if (file.filePath) {
+        if (file.filePath.includes("https://storage.cloud.google.com")) {
+          file.filePath = file.filePath.replace(
+            "https://storage.cloud.google.com",
+            "https://storage.googleapis.com/thegrind_videostorage"
+          );
+        }
       }
     }
+
     return file;
   }
 
