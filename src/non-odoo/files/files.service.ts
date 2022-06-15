@@ -117,13 +117,22 @@ export class FilesService {
     });
   }
 
-  findUserProfile(id: number) {
-    return this.FilesRepository.findOne({
+  async findUserProfile(id: number) {
+    let file = await this.FilesRepository.findOne({
       where: {
         userId: id,
         type: 4,
       },
     });
+    if (file.filePath) {
+      if (file.filePath.includes("https://storage.cloud.google.com")) {
+        file.filePath = file.filePath.replace(
+          "https://storage.cloud.google.com",
+          "https://storage.googleapis.com/thegrind_videostorage"
+        );
+      }
+    }
+    return file;
   }
 
   update(id: number, updateFileDto: UpdateFileDto) {
