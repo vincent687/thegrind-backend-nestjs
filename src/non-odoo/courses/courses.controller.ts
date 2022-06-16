@@ -80,10 +80,18 @@ export class CoursesController {
   @Get(":id")
   async findOne(@Param("id") id: string) {
     var course = await this.coursesService.findOne(+id);
+    var students = course.students.map(async (u) => {
+      var studentProfile = await this.filesService.findUserProfile(u.user_id);
+      return {
+        ...u,
+        profile: studentProfile,
+      };
+    });
     var file = await this.filesService.findCourseProfile(+id);
 
     return {
       ...course,
+      students: await Promise.all(students),
       profile: file,
     };
   }
