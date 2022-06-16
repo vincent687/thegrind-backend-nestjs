@@ -51,6 +51,7 @@ export class CoursesController {
   async findAllByCompanyId(@Param("id") id: string) {
     var courses = await this.coursesService.findAllByCompanyId(+id);
     var coursesDto = await courses.map(async (x) => {
+      var profile = await this.filesService.findCourseProfile(x.id);
       var todayLessons = await this.lessonsService.findAllByCourseId(x.id);
       todayLessons = todayLessons.filter((o) => this.isToday(o.start_date));
 
@@ -66,6 +67,7 @@ export class CoursesController {
 
       return {
         ...x,
+        profile: profile,
         tutors: await Promise.all(tutors),
         todayLessons: todayLessons ?? [],
         tutorsProfiles: tutorsProfiles,

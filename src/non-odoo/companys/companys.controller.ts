@@ -14,11 +14,16 @@ import { JwtAuthGuard } from "../authentication/jwt-auth.guard";
 import { CompanysService } from "./companys.service";
 import { CreateCompanyDto } from "./dto/create-company.dto";
 import { UpdateCompanyDto } from "./dto/update-company.dto";
+import { FilesService } from "../files/files.service";
+import { urlToHttpOptions } from "url";
 
 @ApiTags("Non Odoo Users")
 @Controller("companysNonOdoo")
 export class CompanysController {
-  constructor(private readonly companysService: CompanysService) {}
+  constructor(
+    private readonly companysService: CompanysService,
+    private readonly filesService: FilesService
+  ) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
@@ -35,13 +40,29 @@ export class CompanysController {
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth("JWT-auth")
-  findAll(@Req() req: any) {
-    return this.companysService.findAll(req.user.id);
+  async findAll(@Req() req: any) {
+    var companies = await this.companysService.findAll(req.user.id);
+    var result = await companies.map(async (u) => {
+      var profile = await this.filesService.findCompanyProfile(u.id);
+      return {
+        ...u,
+        profile: profile,
+      };
+    });
+    var results = await Promise.all(result);
+    return results;
   }
 
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.companysService.findOne(+id);
+  async findOne(@Param("id") id: string) {
+    var company = await this.companysService.findOne(+id);
+    var profile = await this.filesService.findCompanyProfile(company.id);
+
+    var result = {
+      ...company,
+      profile: profile,
+    };
+    return result;
   }
 
   @Patch(":id")

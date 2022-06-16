@@ -161,6 +161,28 @@ export class FilesService {
     return file;
   }
 
+  async findCompanyProfile(id: number) {
+    let file = await this.FilesRepository.findOne({
+      where: {
+        companyId: id,
+        type: 2,
+      },
+    });
+
+    if (file) {
+      if (file.filePath) {
+        if (file.filePath.includes("https://storage.cloud.google.com")) {
+          file.filePath = file.filePath.replace(
+            "https://storage.cloud.google.com",
+            "https://storage.googleapis.com/thegrind_videostorage"
+          );
+        }
+      }
+    }
+
+    return file;
+  }
+
   update(id: number, updateFileDto: UpdateFileDto) {
     return `This action updates a #${id} file`;
   }
