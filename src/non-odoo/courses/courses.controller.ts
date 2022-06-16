@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CoursesService } from "./courses.service";
@@ -16,6 +17,8 @@ import { StudentAttendancesNonOdooService } from "../student-attendances/student
 import { LessonsNonOdooModule } from "../lessons/lessons.module";
 import { LessonsService } from "../lessons/lessons.service";
 import { FilesService } from "../files/files.service";
+import { UsersService } from "../users/users.service";
+import { OutPut } from "src/interface/output";
 
 @ApiTags("Non Odoo Users")
 @Controller("courses")
@@ -24,7 +27,8 @@ export class CoursesController {
     private readonly coursesService: CoursesService,
     private readonly lessonsService: LessonsService,
     private readonly attendanceService: StudentAttendancesNonOdooService,
-    private readonly filesService: FilesService
+    private readonly filesService: FilesService,
+    private readonly usersService: UsersService
   ) {}
 
   isToday(date) {
@@ -76,7 +80,73 @@ export class CoursesController {
     var results = await Promise.all(coursesDto);
     return results;
   }
+  @Get("/email/:email")
+  async getMyLessons(
+    @Param("email") email: string,
+    @Query("page") page: number,
+    @Query("pageSize") pageSize: number
+  ) {
+    var user = await this.usersService.findByEmail(email);
+    var studentAttdendances = await this.coursesService.findAllByUserId(
+      user.id
+    );
+    // var result: Tutor[] = [];
 
+    var finalStudentAttdendances = studentAttdendances.slice(
+      (page - 1) * pageSize,
+      page * pageSize
+    );
+    var coursesDto = finalStudentAttdendances.map(async (u) => {
+      var profile = await this.filesService.findCourseProfile(u.id);
+      var tutorsProfiles = [];
+      var tutors = await u.tutors.map(async (p) => {
+        var file = await this.filesService.findUserProfile(p.user_id);
+
+        if (tutorsProfiles.length < 4 && file != null) {
+          tutorsProfiles.push(file.filePath);
+        }
+        return { ...p, profile: file };
+      });
+
+      return {
+        ...u,
+        profile: profile,
+        tutors: await Promise.all(tutors),
+        tutorsProfiles: tutorsProfiles,
+      };
+    });
+
+    var result: OutPut = {
+      data: await Promise.all(coursesDto),
+      meta: {
+        total: coursesDto.length,
+      },
+    };
+    // var promise = finalStudentAttdendances.map(async (key, index) => {
+    //   if (key.tutor) {
+    //     Logger.log("id", key.tutor.id);
+    //     var tutor = await this.tutorsService.findOne(+key.tutor.id);
+    //     var tutorFinal = new ReadTutorDto();
+    //     var attachment = await this.attachmentsService.getImageByTable(
+    //       "hr.employee",
+    //       tutor.employee.id
+    //     );
+    //     var attachment2 = await this.attachmentsService.getImageByTable(
+    //       "slide.channel",
+    //       tutor.course.id
+    //     );
+    //     var newEmployee = new ReadEmployeeDto();
+    //     newEmployee = { ...tutor.employee, attachment };
+    //     var newChannel = { ...tutor.course, attachment: attachment2 };
+    //     tutorFinal = { ...tutor, employee: newEmployee, course: newChannel };
+
+    //     return tutorFinal;
+    //   }
+    // });
+    // result.data = await Promise.all(promise);
+
+    return result;
+  }
   @Get(":id")
   async findOne(@Param("id") id: string) {
     var course = await this.coursesService.findOne(+id);

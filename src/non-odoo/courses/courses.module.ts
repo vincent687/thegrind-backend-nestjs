@@ -6,12 +6,14 @@ import { Course } from "./entities/course.entity";
 import { StudentAttendancesNonOdooModule } from "../student-attendances/student-attendances.module";
 import { LessonsNonOdooModule } from "../lessons/lessons.module";
 import { FilesModule } from "../files/files.module";
+import { UsersModule } from "../users/users.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Course], "nonodoo"),
     StudentAttendancesNonOdooModule,
     FilesModule,
+    UsersModule,
     forwardRef(() => LessonsNonOdooModule),
   ],
   controllers: [CoursesController],

@@ -42,6 +42,14 @@ export class UsersService {
     return result;
   }
 
+  findByEmail(email: string) {
+    return this.UsersRepository.findOne({
+      where: {
+        email: email,
+      },
+    });
+  }
+
   update(id: number, updateUsersDto: UpdateUsersDto) {
     return `This action updates a #${id} usersFront`;
   }
