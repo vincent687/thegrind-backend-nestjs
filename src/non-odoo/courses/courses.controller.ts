@@ -53,15 +53,15 @@ export class CoursesController {
 
   @Get("/company/:id")
   async findAllByCompanyId(@Param("id") id: string) {
-    var courses = await this.coursesService.findAllByCompanyId(+id);
-    var coursesDto = await courses.map(async (x) => {
-      var profile = await this.filesService.findCourseProfile(x.id);
-      var todayLessons = await this.lessonsService.findAllByCourseId(x.id);
+    let courses = await this.coursesService.findAllByCompanyId(+id);
+    let coursesDto = await courses.map(async (x) => {
+      let profile = await this.filesService.findCourseProfile(x.id);
+      let todayLessons = await this.lessonsService.findAllByCourseId(x.id);
       todayLessons = todayLessons.filter((o) => this.isToday(o.start_date));
 
-      var tutorsProfiles = [];
-      var tutors = await x.tutors.map(async (p) => {
-        var file = await this.filesService.findUserProfile(p.user_id);
+      let tutorsProfiles = [];
+      let tutors = await x.tutors.map(async (p) => {
+        let file = await this.filesService.findUserProfile(p.user_id);
 
         if (tutorsProfiles.length < 4 && file != null) {
           tutorsProfiles.push(file.filePath);
@@ -77,7 +77,7 @@ export class CoursesController {
         tutorsProfiles: tutorsProfiles,
       };
     });
-    var results = await Promise.all(coursesDto);
+    let results = await Promise.all(coursesDto);
     return results;
   }
   @Get("/email/:email")

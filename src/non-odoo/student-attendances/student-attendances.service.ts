@@ -138,10 +138,11 @@ export class StudentAttendancesNonOdooService {
   }
 
   async updateAttendTheLesson(
-    user_id: number,
+    updateUserId: number,
     updateStudentAttendanceDto: UpdateStudentAttendanceDto
   ) {
-    const { lesson_id } = updateStudentAttendanceDto;
+    const { lesson_id, user_id } = updateStudentAttendanceDto;
+
     var originalAttendance =
       await this.StudentAttendancesRepository.createQueryBuilder(
         "studentAttendance"
@@ -152,6 +153,7 @@ export class StudentAttendancesNonOdooService {
         )
         .getOne();
 
+    Logger.log("oattend", originalAttendance);
     const attendance = {
       id: originalAttendance.id,
       user_id: user_id,
