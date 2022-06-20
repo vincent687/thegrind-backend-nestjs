@@ -19,12 +19,14 @@ import { LessonsService } from "../lessons/lessons.service";
 import { FilesService } from "../files/files.service";
 import { UsersService } from "../users/users.service";
 import { OutPut } from "src/interface/output";
+import { CompanysService } from "../companys/companys.service";
 
 @ApiTags("Non Odoo Users")
 @Controller("courses")
 export class CoursesController {
   constructor(
     private readonly coursesService: CoursesService,
+    private readonly companiesService: CompanysService,
     private readonly lessonsService: LessonsService,
     private readonly attendanceService: StudentAttendancesNonOdooService,
     private readonly filesService: FilesService,
@@ -97,6 +99,7 @@ export class CoursesController {
       page * pageSize
     );
     var coursesDto = finalStudentAttdendances.map(async (u) => {
+      var company = await this.companiesService.findOne(u.companyId);
       var profile = await this.filesService.findCourseProfile(u.id);
       var tutorsProfiles = [];
       var tutors = await u.tutors.map(async (p) => {
@@ -110,6 +113,7 @@ export class CoursesController {
 
       return {
         ...u,
+        companyName: company.name,
         profile: profile,
         tutors: await Promise.all(tutors),
         tutorsProfiles: tutorsProfiles,
