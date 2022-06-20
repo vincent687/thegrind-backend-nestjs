@@ -99,6 +99,8 @@ export class CoursesController {
       page * pageSize
     );
     var coursesDto = finalStudentAttdendances.map(async (u) => {
+      Logger.log("attendance", u);
+      Logger.log("attendance company", u.companyId);
       var company = await this.companiesService.findOne(u.companyId);
       var profile = await this.filesService.findCourseProfile(u.id);
       var tutorsProfiles = [];
@@ -110,10 +112,11 @@ export class CoursesController {
         }
         return { ...p, profile: file };
       });
+      Logger.log("company", company);
 
       return {
         ...u,
-        companyName: company.name,
+        companyName: company ? company.name : "",
         profile: profile,
         tutors: await Promise.all(tutors),
         tutorsProfiles: tutorsProfiles,
