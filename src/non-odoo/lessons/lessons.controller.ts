@@ -59,9 +59,12 @@ export class LessonsController {
         countAbscense++;
       }
 
+      let profile = await this.filesService.findUserProfile(u.user_id);
+
       return {
         ...u,
         attendance,
+        profile: profile,
       };
     });
 
