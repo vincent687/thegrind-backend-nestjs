@@ -56,10 +56,28 @@ export class CompanysController {
   @Get(":id")
   async findOne(@Param("id") id: string) {
     var company = await this.companysService.findOne(+id);
+    let tutorsPromise = company.users.map(async (u) => {
+      let profile = await this.filesService.findUserProfile(u.user_id);
+      return {
+        ...u,
+        profile: profile,
+      };
+    });
+    let studentsPromise = company.students.map(async (u) => {
+      let profile = await this.filesService.findUserProfile(u.user_id);
+      return {
+        ...u,
+        profile: profile,
+      };
+    });
     var profile = await this.filesService.findCompanyProfile(company.id);
 
+    let tutors = await Promise.all(tutorsPromise);
+    let students = await Promise.all(studentsPromise);
     var result = {
       ...company,
+      tutors: tutors,
+      students: students,
       profile: profile,
     };
     return result;
