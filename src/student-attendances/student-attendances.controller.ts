@@ -1,13 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { StudentAttendancesService } from './student-attendances.service';
-import { CreateStudentAttendanceDto } from './dto/create-student-attendance.dto';
-import { UpdateStudentAttendanceDto } from './dto/update-student-attendance.dto';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from "@nestjs/common";
+import { StudentAttendancesService } from "./student-attendances.service";
+import { CreateStudentAttendanceDto } from "./dto/create-student-attendance.dto";
+import { UpdateStudentAttendanceDto } from "./dto/update-student-attendance.dto";
+import { ApiTags } from "@nestjs/swagger";
 
-@ApiTags('Student Attendances')
-@Controller('student-attendances')
+@ApiTags("Student Attendances")
+@Controller("student-attendances")
 export class StudentAttendancesController {
-  constructor(private readonly studentAttendancesService: StudentAttendancesService) { }
+  constructor(
+    private readonly studentAttendancesService: StudentAttendancesService
+  ) {}
 
   @Post()
   create(@Body() createStudentAttendanceDto: CreateStudentAttendanceDto) {
@@ -19,18 +29,24 @@ export class StudentAttendancesController {
     return this.studentAttendancesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.studentAttendancesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentAttendanceDto: UpdateStudentAttendanceDto) {
-    return this.studentAttendancesService.update(+id, updateStudentAttendanceDto);
+  @Patch(":id")
+  update(
+    @Param("id") id: string,
+    @Body() updateStudentAttendanceDto: UpdateStudentAttendanceDto
+  ) {
+    return this.studentAttendancesService.update(
+      +id,
+      updateStudentAttendanceDto
+    );
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.studentAttendancesService.remove(+id);
   }
 }

@@ -58,6 +58,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { LessonsNonOdooModule } from "./non-odoo/lessons/lessons.module";
 import { VideoCommentsModule } from "./non-odoo/video-comments/video-comments.module";
 import { StudentAttendancesNonOdooModule } from "./non-odoo/student-attendances/student-attendances.module";
+import { VideosNonOdooModule } from "./non-odoo/courses/video/videos.module";
 
 @Module({
   imports: [
@@ -96,6 +97,7 @@ import { StudentAttendancesNonOdooModule } from "./non-odoo/student-attendances/
     LessonsNonOdooModule,
     VideoCommentsModule,
     StudentAttendancesNonOdooModule,
+    VideosNonOdooModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],
