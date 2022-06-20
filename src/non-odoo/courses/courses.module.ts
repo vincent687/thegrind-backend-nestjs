@@ -7,11 +7,13 @@ import { StudentAttendancesNonOdooModule } from "../student-attendances/student-
 import { LessonsNonOdooModule } from "../lessons/lessons.module";
 import { FilesModule } from "../files/files.module";
 import { UsersModule } from "../users/users.module";
+import { CompanysNonOdooModule } from "../companys/companys.module";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Course], "nonodoo"),
     StudentAttendancesNonOdooModule,
+    CompanysNonOdooModule,
     FilesModule,
     UsersModule,
     forwardRef(() => LessonsNonOdooModule),

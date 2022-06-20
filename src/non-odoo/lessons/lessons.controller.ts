@@ -46,7 +46,11 @@ export class LessonsController {
 
   @Get(":id")
   async findOne(@Param("id") id: string, @Query("courseId") courseId: string) {
-    var lesson = await this.lessonsService.findOne(+id, +courseId);
+    let lesson = courseId
+      ? await this.lessonsService.findOne(+id, +courseId)
+      : await this.lessonsService.findOneWithoutCourseId(+id);
+
+    // var lesson = await this.lessonsService.findOne(+id, +courseId);
     var materials = await this.filesService.findAllLessonMaterial(lesson.id);
     var course = await this.courseService.findOne(lesson.course_id);
     var countAbscense = 0;

@@ -106,6 +106,18 @@ export class LessonsService {
       .getOne();
   }
 
+  findOneWithoutCourseId(id: number) {
+    return this.LessonsRepository.createQueryBuilder("lesson")
+      .leftJoinAndSelect("lesson.tutors", "lessonTutor")
+      .leftJoinAndSelect("lessonTutor.user", "tutor")
+      .leftJoinAndSelect("lesson.students", "lessonStudent")
+      .leftJoinAndSelect("lessonStudent.user", "student")
+      .where("lesson.id = :id ", {
+        id,
+      })
+      .getOne();
+  }
+
   async update(id: number, updateLessonDto: UpdateLessonDto) {
     const lesson = {
       id: updateLessonDto.id,
