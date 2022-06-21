@@ -20,7 +20,7 @@ export class CoursesService {
       end_date: createCourseDto.end_date,
       location: createCourseDto.location,
       createdby_user: createCourseDto.createdby_user,
-      created_date: createCourseDto.created_date,
+      created_date: new Date(),
       companyId: createCourseDto.companyId,
       course_email: createCourseDto.course_email,
     };
