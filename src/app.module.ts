@@ -59,6 +59,7 @@ import { LessonsNonOdooModule } from "./non-odoo/lessons/lessons.module";
 import { VideoCommentsModule } from "./non-odoo/video-comments/video-comments.module";
 import { StudentAttendancesNonOdooModule } from "./non-odoo/student-attendances/student-attendances.module";
 import { VideosNonOdooModule } from "./non-odoo/courses/video/videos.module";
+import { MyCalendarNonOdooModule } from "./non-odoo/my-calendar/my-calendar.module";
 
 @Module({
   imports: [
@@ -98,6 +99,7 @@ import { VideosNonOdooModule } from "./non-odoo/courses/video/videos.module";
     VideoCommentsModule,
     StudentAttendancesNonOdooModule,
     VideosNonOdooModule,
+    MyCalendarNonOdooModule,
   ],
   controllers: [AppController],
   //providers: [AppService, PartnersService],

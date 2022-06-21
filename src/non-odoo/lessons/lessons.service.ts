@@ -93,6 +93,18 @@ export class LessonsService {
       .getMany();
   }
 
+  findAllByUserId(id: number) {
+    return this.LessonsRepository.createQueryBuilder("lesson")
+      .leftJoinAndSelect("lesson.tutors", "lessonTutor")
+      .leftJoinAndSelect("lessonTutor.user", "tutor")
+      .leftJoinAndSelect("lesson.students", "lessonStudent")
+      .leftJoinAndSelect("lessonStudent.user", "student")
+      .where("student.id = :id ", {
+        id,
+      })
+      .getMany();
+  }
+
   findOne(id: number, courseId: number) {
     return this.LessonsRepository.createQueryBuilder("lesson")
       .leftJoinAndSelect("lesson.tutors", "lessonTutor")
