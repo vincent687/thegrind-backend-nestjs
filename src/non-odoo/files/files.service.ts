@@ -117,9 +117,16 @@ export class FilesService {
   }
   async findAllLessonMaterial(lessonId: number) {
     const files = await this.FilesRepository.find({
-      where: {
-        lessonId: lessonId,
-      },
+      where: [
+        {
+          lessonId: lessonId,
+          type: 3,
+        },
+        {
+          lessonId: lessonId,
+          type: 5,
+        },
+      ],
     });
 
     const result: ReadFileDto[] = files.map((key, index) => {
