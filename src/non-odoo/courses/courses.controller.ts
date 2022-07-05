@@ -43,6 +43,19 @@ export class CoursesController {
     return false;
   }
 
+  isComingLesson(date) {
+    const today = new Date();
+    // 👇️ Today's date
+    if (today.toDateString() === date.toDateString()) {
+      return true;
+    }
+    if (today < date) {
+      console.log(date);
+      return true;
+    }
+    return false;
+  }
+
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.create(createCourseDto);
@@ -103,6 +116,22 @@ export class CoursesController {
       Logger.log("attendance company", u.companyId);
       var company = await this.companiesService.findOne(u.companyId);
       var profile = await this.filesService.findCourseProfile(u.id);
+      let todayLessons = await this.lessonsService.findAllByCourseId(u.id);
+      Logger.log("course", u.id);
+      Logger.log("today", todayLessons);
+      todayLessons = todayLessons.filter((o) =>
+        this.isComingLesson(o.start_date)
+      );
+      Logger.log("today2", todayLessons);
+      let coming_lesson = todayLessons.sort(
+        (a: any, b: any) => b.start_date - a.start_date
+      );
+      Logger.log("today3", coming_lesson);
+
+      var todayLessons2 = coming_lesson.filter((o) =>
+        this.isComingLesson(o.start_date)
+      );
+
       var tutorsProfiles = [];
       var tutors = await u.tutors.map(async (p) => {
         var file = await this.filesService.findUserProfile(p.user_id);
@@ -120,6 +149,9 @@ export class CoursesController {
         profile: profile,
         tutors: await Promise.all(tutors),
         tutorsProfiles: tutorsProfiles,
+        coming_lesson_id: coming_lesson[coming_lesson.length - 1]
+          ? coming_lesson[coming_lesson.length - 1].id
+          : 0,
       };
     });
 
