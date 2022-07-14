@@ -33,7 +33,7 @@ export class UserGroupsController {
     var result = userGroups.map((p) => {
       return {
         ...p,
-        pimage:
+        image:
           "https://flamingcmsapi.azurewebsites.net/v1/photo?fileID=1971&tenant=Test",
       };
     });
