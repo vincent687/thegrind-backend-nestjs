@@ -35,6 +35,7 @@ import { LessonNonOdoo } from "src/non-odoo/lessons/entities/lesson.entity";
 import { VideoComment } from "src/non-odoo/video-comments/entities/video-comment.entity";
 import { CompanyStudentNonOdoo } from "src/non-odoo/users/entities/company-student.entity";
 import { StudentAttendanceNonOdoo } from "src/non-odoo/student-attendances/entities/student-attendance.entity";
+import { UserGroup } from "src/non-odoo/user-groups/entities/user-group.entitiy";
 
 require("dotenv").config();
 
@@ -76,6 +77,7 @@ const ENTITIES = [
   VideoComment,
   CompanyStudentNonOdoo,
   StudentAttendanceNonOdoo,
+  UserGroup,
 ];
 export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}

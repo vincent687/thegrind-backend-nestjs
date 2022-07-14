@@ -30,5 +30,5 @@ npm i --save-dev nodemon ts-node
 
 #migration
 npm run typeorm migration:create -- -n UserTable -d src/migrations/non-odoo
-
+npm run typeorm -- migration:run
 #

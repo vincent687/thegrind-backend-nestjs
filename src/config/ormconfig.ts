@@ -18,6 +18,7 @@ import { LessonNonOdoo } from "src/non-odoo/lessons/entities/lesson.entity";
 import { VideoComment } from "src/non-odoo/video-comments/entities/video-comment.entity";
 import { CompanyStudentNonOdoo } from "../non-odoo/users/entities/company-student.entity";
 import { StudentAttendanceNonOdoo } from "src/non-odoo/student-attendances/entities/student-attendance.entity";
+import { UserGroup } from "../non-odoo/user-groups/entities/user-group.entitiy";
 
 dotenv.config();
 
@@ -38,7 +39,8 @@ const ENTITIES = [
   LessonTutor,
   LessonStudent,
   VideoComment,
-  StudentAttendanceNonOdoo
+  StudentAttendanceNonOdoo,
+  UserGroup,
 ];
 
 dotenv.config();
