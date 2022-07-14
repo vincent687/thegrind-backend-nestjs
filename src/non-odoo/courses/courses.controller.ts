@@ -20,6 +20,7 @@ import { FilesService } from "../files/files.service";
 import { UsersService } from "../users/users.service";
 import { OutPut } from "src/interface/output";
 import { CompanysService } from "../companys/companys.service";
+import { UserGroupsService } from "../user-groups/user-groups.service";
 
 @ApiTags("Non Odoo Users")
 @Controller("courses")
@@ -30,7 +31,8 @@ export class CoursesController {
     private readonly lessonsService: LessonsService,
     private readonly attendanceService: StudentAttendancesNonOdooService,
     private readonly filesService: FilesService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
+    private readonly userGroupsService: UserGroupsService
   ) {}
 
   isToday(date) {
@@ -189,11 +191,22 @@ export class CoursesController {
   @Get(":id")
   async findOne(@Param("id") id: string) {
     var course = await this.coursesService.findOne(+id);
+    var tutors = await course.tutors.map(async (p) => {
+      var file = await this.filesService.findUserProfile(p.id);
+      Logger.log("tutor", p);
+      var group = await this.userGroupsService.findOneByType(p.type);
+      Logger.log("tgroup", group);
+      return { ...p, profile: file, groupId: group.id };
+    });
     var students = course.students.map(async (u) => {
+      Logger.log("tutor", u);
       var studentProfile = await this.filesService.findUserProfile(u.user_id);
+      var group = await this.userGroupsService.findOneByType(u.user.type);
+      Logger.log("sgroup", group);
       return {
         ...u,
         profile: studentProfile,
+        groupId: group.id,
       };
     });
     var file = await this.filesService.findCourseProfile(+id);
@@ -201,6 +214,7 @@ export class CoursesController {
     return {
       ...course,
       students: await Promise.all(students),
+      tutors: await Promise.all(tutors),
       profile: file,
     };
   }

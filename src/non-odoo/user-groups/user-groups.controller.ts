@@ -28,8 +28,16 @@ export class UserGroupsController {
   }
 
   @Get()
-  findAll() {
-    return this.userGroupsService.findAll();
+  async findAll() {
+    var userGroups = await this.userGroupsService.findAll();
+    var result = userGroups.map((p) => {
+      return {
+        ...p,
+        pimage:
+          "https://flamingcmsapi.azurewebsites.net/v1/photo?fileID=1971&tenant=Test",
+      };
+    });
+    return result;
   }
 
   @Get(":id")

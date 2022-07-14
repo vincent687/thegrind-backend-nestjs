@@ -8,6 +8,7 @@ import { LessonsNonOdooModule } from "../lessons/lessons.module";
 import { FilesModule } from "../files/files.module";
 import { UsersModule } from "../users/users.module";
 import { CompanysNonOdooModule } from "../companys/companys.module";
+import { UserGroupsModule } from "../user-groups/user-groups.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CompanysNonOdooModule } from "../companys/companys.module";
     CompanysNonOdooModule,
     FilesModule,
     UsersModule,
+    UserGroupsModule,
     forwardRef(() => LessonsNonOdooModule),
   ],
   controllers: [CoursesController],

@@ -138,7 +138,7 @@ export class CoursesService {
         .filter((u) => u != null),
       tutors: course.tutors
         .map((x) => {
-          return x.user.id;
+          return x.user;
         })
         .filter((u) => u != null),
     };

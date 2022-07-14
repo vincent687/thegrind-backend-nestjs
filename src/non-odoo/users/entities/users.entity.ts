@@ -40,5 +40,5 @@ export class User {
   studentCourses: CourseStudent[];
   @OneToMany((type) => LessonStudent, (lessonUser) => lessonUser.user)
   @JoinColumn()
-  lstudentLessons: LessonStudent[];
+  studentLessons: LessonStudent[];
 }

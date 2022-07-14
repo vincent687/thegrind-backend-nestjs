@@ -35,6 +35,12 @@ export class UserGroupsService {
     return this.UserGroupsRepository.find();
   }
 
+  findOneByType(type: string) {
+    return this.UserGroupsRepository.createQueryBuilder("userGroup")
+      .where("userGroup.value like :type", { type: `%${type}%` })
+      .getOne();
+  }
+
   findOne(id: number) {
     return this.UserGroupsRepository.createQueryBuilder("userGroup")
       .where("userGroup.id = :id", { id })
