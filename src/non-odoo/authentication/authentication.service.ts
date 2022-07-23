@@ -34,6 +34,9 @@ export class AuthenticationService {
       const createdUser = await this.UsersService.create({
         ...registrationData,
         password: hashedPassword,
+        description: "",
+        phoneNo: "",
+        statistic: "{}",
       });
       createdUser.password = undefined;
       return createdUser;

@@ -26,6 +26,17 @@ export class User {
   email: string;
   @Column()
   type: string;
+  @Column()
+  description: string;
+  @Column()
+  phoneNo: string;
+  @Column({
+    type: "jsonb",
+    array: false,
+    default: () => "'{}'",
+    nullable: true,
+  })
+  statistic: string;
   @OneToMany((type) => CompanyUserNonOdoo, (companyUser) => companyUser.user)
   @JoinColumn()
   companys: CompanyUserNonOdoo[];

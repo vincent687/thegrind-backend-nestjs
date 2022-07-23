@@ -51,7 +51,15 @@ export class UsersService {
   }
 
   update(id: number, updateUsersDto: UpdateUsersDto) {
-    return `This action updates a #${id} usersFront`;
+    return this.UsersRepository.createQueryBuilder()
+      .update(User)
+      .set({
+        email: updateUsersDto.email,
+        description: updateUsersDto.description,
+        phoneNo: updateUsersDto.phoneNo,
+      })
+      .where("id = :id", { id: id })
+      .execute();
   }
 
   remove(id: number) {
